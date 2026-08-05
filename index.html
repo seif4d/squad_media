@@ -66,6 +66,95 @@
             position: relative;
         }
 
+        /* Noise Texture Overlay */
+        body::before {
+            content: '';
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+            opacity: 0.022;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* Cursor Glow Spotlight */
+        .cursor-glow {
+            position: fixed;
+            width: 450px; height: 450px;
+            background: radial-gradient(circle, rgba(198, 255, 0, 0.06) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            transition: transform 0.08s linear;
+        }
+
+        /* Animated Gradient Hero Title */
+        @keyframes gradient-shift {
+            0%   { background-position: 0% 50%; }
+            50%  { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .text-animated {
+            background: linear-gradient(270deg, #C6FF00, #00FFD1, #C6FF00, #aaff00);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-shift 4s ease infinite;
+        }
+
+        /* Testimonials */
+        .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 22px; }
+        .testimonial-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid var(--border); border-radius: 20px; padding: 28px 24px;
+            backdrop-filter: var(--glass-blur); transition: var(--transition-bounce);
+            position: relative; overflow: hidden;
+        }
+        .testimonial-card::before {
+            content: '\201C';
+            position: absolute; top: 10px; left: 20px;
+            font-size: 6rem; line-height: 1; color: rgba(198,255,0,0.07);
+            font-family: Georgia, serif; pointer-events: none;
+        }
+        .testimonial-card:hover { border-color: var(--border-neon); transform: translateY(-5px); }
+        .testimonial-stars { color: #f59e0b; font-size: 0.9rem; margin-bottom: 14px; letter-spacing: 3px; }
+        .testimonial-text { color: #d4d4d8; font-size: 0.95rem; line-height: 1.7; margin-bottom: 22px; font-style: italic; }
+        .testimonial-author { display: flex; align-items: center; gap: 12px; }
+        .author-avatar {
+            width: 42px; height: 42px; border-radius: 50%;
+            background: linear-gradient(135deg, rgba(198,255,0,0.4) 0%, rgba(198,255,0,0.1) 100%);
+            border: 2px solid var(--border-neon);
+            display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-title); font-size: 1.1rem; font-weight: 800; color: var(--primary);
+        }
+        .author-info { display: flex; flex-direction: column; }
+        .author-name { font-weight: 700; font-size: 0.95rem; color: #fff; }
+        .author-role { font-size: 0.8rem; color: var(--text-muted); }
+
+        /* Process Steps */
+        .process-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0; position: relative; }
+        .process-steps::before {
+            content: ''; position: absolute; top: 32px; right: 0; left: 0;
+            height: 1px; background: linear-gradient(90deg, transparent, var(--border-neon), transparent);
+        }
+        @media (max-width: 768px) {
+            .process-steps::before { display: none; }
+            .process-steps { gap: 20px; }
+        }
+        .process-step { text-align: center; padding: 0 20px; position: relative; }
+        .step-num {
+            width: 64px; height: 64px; border-radius: 50%;
+            background: var(--bg-base); border: 2px solid var(--border-neon);
+            display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-title); font-size: 1.4rem; font-weight: 900; color: var(--primary);
+            margin: 0 auto 20px; position: relative; z-index: 1;
+            box-shadow: 0 0 20px rgba(198,255,0,0.15);
+            transition: all 0.3s ease;
+        }
+        .process-step:hover .step-num { background: var(--primary); color: #000; box-shadow: 0 0 35px rgba(198,255,0,0.4); }
+        .step-title { font-family: var(--font-title); font-size: 1.1rem; margin-bottom: 8px; }
+        .step-desc { color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; max-width: 180px; margin: 0 auto; }
+
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg-base); }
@@ -369,10 +458,10 @@
             background: rgba(255,255,255,0.02); padding: 28px 24px; border-radius: 18px;
             border: 1px solid var(--border); backdrop-filter: blur(20px);
         }
-        .input-group { margin-bottom: 15px; position: relative; }
-        .input-group i { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: var(--text-muted); pointer-events: none; z-index: 2; font-size: 1rem; }
+        .input-group { margin-bottom: 16px; position: relative; }
+        .input-group i { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); pointer-events: none; z-index: 2; font-size: 1rem; }
         .form-control {
-            width: 100%; padding: 13px 16px 13px 42px; background: rgba(0,0,0,0.5);
+            width: 100%; padding: 13px 50px 13px 20px; background: rgba(0,0,0,0.5);
             border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: #fff;
             font-family: var(--font-main); font-size: 0.88rem; transition: all 0.3s;
         }
@@ -380,12 +469,12 @@
 
         /* Custom Select Dropdown UI */
         .custom-select-container {
-            position: relative; margin-bottom: 20px; user-select: none;
+            position: relative; margin-bottom: 16px; user-select: none;
         }
         .custom-select-trigger {
-            width: 100%; padding: 16px 20px 16px 50px; background: rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px;
-            color: var(--text-muted); font-family: var(--font-main); font-size: 0.95rem;
+            width: 100%; padding: 13px 50px 13px 40px; background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px;
+            color: var(--text-muted); font-family: var(--font-main); font-size: 0.88rem;
             display: flex; align-items: center; justify-content: space-between;
             cursor: pointer; transition: all 0.3s ease; position: relative;
         }
@@ -394,8 +483,8 @@
             border-color: var(--primary); box-shadow: 0 0 20px rgba(198, 255, 0, 0.2);
             border-bottom-left-radius: 4px; border-bottom-right-radius: 4px;
         }
-        .select-icon { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 1.1rem; }
-        .arrow-icon { font-size: 0.85rem; color: var(--text-muted); transition: transform 0.3s ease; }
+        .select-icon { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 1rem; pointer-events: none; z-index: 2; }
+        .arrow-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.85rem; pointer-events: none; z-index: 2; transition: transform 0.3s ease; }
         .custom-select-container.open .arrow-icon { transform: rotate(180deg); color: var(--primary); }
 
         .custom-select-options {
@@ -426,10 +515,67 @@
         }
         .custom-option.selected i { color: var(--primary); }
 
+
+
+        /* ==========================================
+           8.2 LIVE STATS COUNTER
+           ========================================== */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+        .stat-box-card {
+            background: var(--bg-surface); border: 1px solid var(--border);
+            border-radius: 20px; padding: 28px 20px; text-align: center;
+            backdrop-filter: var(--glass-blur); transition: var(--transition-bounce);
+        }
+        .stat-box-card:hover { border-color: var(--primary); transform: translateY(-5px); }
+        .counter-num { font-family: var(--font-title); font-size: 2.5rem; color: var(--primary); line-height: 1; margin-bottom: 8px; }
+        .counter-label { color: var(--text-muted); font-size: 0.95rem; font-weight: 600; }
+
+        /* ==========================================
+           8.3 FAQ ACCORDION
+           ========================================== */
+        .faq-wrapper { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+        .faq-item {
+            background: var(--bg-surface); border: 1px solid var(--border);
+            border-radius: 14px; overflow: hidden; backdrop-filter: var(--glass-blur);
+            transition: all 0.3s ease;
+        }
+        .faq-item:hover { border-color: rgba(255, 255, 255, 0.2); }
+        .faq-item.active { border-color: var(--border-neon); background: rgba(198, 255, 0, 0.03); box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+        
+        .faq-question {
+            padding: 18px 22px; font-family: var(--font-main); font-size: 0.98rem; font-weight: 700;
+            display: flex; justify-content: space-between; align-items: center; gap: 15px;
+            cursor: pointer; color: #fff; transition: color 0.3s; line-height: 1.5;
+        }
+        .faq-question-title { display: flex; align-items: flex-start; gap: 12px; flex: 1; }
+        .faq-question-title i { color: var(--primary); font-size: 1rem; margin-top: 3px; flex-shrink: 0; }
+        .faq-question:hover { color: var(--primary); }
+        
+        .faq-icon {
+            width: 28px; height: 28px; border-radius: 50%; background: rgba(255, 255, 255, 0.05);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.8rem; color: var(--primary); flex-shrink: 0;
+            transition: all 0.3s ease; border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .faq-item.active .faq-icon { transform: rotate(180deg); background: var(--primary); color: #000; border-color: var(--primary); }
+        
+        .faq-answer {
+            max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0, 1, 0, 1);
+            padding: 0 22px 0 54px; color: var(--text-muted); font-size: 0.9rem; line-height: 1.7;
+        }
+        .faq-item.active .faq-answer { max-height: 300px; padding: 0 22px 20px 54px; transition: max-height 0.35s cubic-bezier(1, 0, 1, 0); }
+
+        @media (max-width: 768px) {
+            .faq-question { padding: 15px 16px; font-size: 0.9rem; }
+            .faq-answer { padding: 0 16px 0 16px; font-size: 0.85rem; }
+            .faq-item.active .faq-answer { padding: 0 16px 16px 16px; }
+            .faq-icon { width: 24px; height: 24px; font-size: 0.75rem; }
+        }
+
         /* ==========================================
            9. FOOTER
            ========================================== */
-        footer { border-top: 1px solid var(--border); padding: 60px 0 30px; background: #030303; margin-top: 100px; }
+        footer { border-top: 1px solid var(--border); padding: 50px 0 25px; background: #030303; margin-top: 80px; }
         .footer-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 30px; margin-bottom: 40px; }
         .social-links { display: flex; gap: 15px; }
         .social-links a {
@@ -564,6 +710,8 @@
     <!-- Ambient Background -->
     <div class="ambient-glow glow-1"></div>
     <div class="ambient-glow glow-2"></div>
+    <!-- Cursor Glow -->
+    <div class="cursor-glow" id="cursorGlow"></div>
 
     <!-- HEADER -->
     <header id="header">
@@ -575,10 +723,11 @@
             
             <ul class="nav-links" id="navLinks">
                 <li><a href="#services" class="nav-item">الخدمات</a></li>
-                <li><a href="#pricing" class="nav-item">الباقات</a></li>
+                <li><a href="#pricing" class="nav-item">الباقات والحلول</a></li>
+                <li><a href="#faq" class="nav-item">الأسئلة الشائعة</a></li>
                 <li><a href="#contact" class="nav-item">تواصل معنا</a></li>
                 <a href="#contact" class="btn btn-primary mobile-cta nav-item">
-                    <i class="fa-solid fa-bolt"></i> ابدأ الآن
+                    <i class="fa-solid fa-paper-plane"></i> احصل على استشارة
                 </a>
             </ul>
 
@@ -597,7 +746,7 @@
         <div class="container hero-grid">
             <div class="hero-text reveal-right">
                 <div class="badge"><i class="fa-solid fa-fire"></i> وكالة التسويق الأسرع نمواً</div>
-                <h1>تسويق ذكي.<br><span class="text-neon">نتائج سريعة.</span><br>مبيعات حقيقية.</h1>
+                <h1>تسويق ذكي<br><span class="text-animated">نتائج سريعة</span><br>مبيعات حقيقية</h1>
                 <p>نحن لا نصنع مجرد تصاميم جذابة! نحن نبني لك أنظمة تسويقية وإعلانات مدفوعة موجهة مباشرة لمضاعفة الأرباح (ROI) لشركتك في السوق المصري.</p>
                 <div class="hero-btns">
                     <a href="#contact" class="btn btn-primary">
@@ -732,7 +881,7 @@
                             صُممت لتجربة أداء فريقنا وسرعة نتائجنا لتقييم التصاميم والإعلانات بدون التعاقد الشهري.
                         </p>
                         <div class="price-amount" style="margin: 15px 0 25px;">
-                            2,500 <span>ج.م (مرة واحدة)</span>
+                            1,500 <span>ج.م (مرة واحدة)</span>
                         </div>
                         <a href="#contact" class="btn btn-primary" style="width: 100%;">
                             <i class="fa-solid fa-bolt"></i> احجز باقة التجربة الآن
@@ -742,7 +891,7 @@
                         <ul class="price-features" style="margin-bottom:0;">
                             <li><i class="fa-solid fa-check"></i> <strong>4 تصاميم إعلانية</strong> موجهة للمبيعات والتفاعل</li>
                             <li><i class="fa-solid fa-check"></i> <strong>إعداد وإطلاق 1 حملة إعلانية</strong> ممولة مدفوعة</li>
-                            <li><i class="fa-solid fa-check"></i> <strong>كتابة محتوى بيعي (Copywriting)</strong> مخصص لمنتجك</li>
+                            <li><i class="fa-solid fa-check"></i> <strong>كتابة محتوى بيعي (Copywriting)</strong></li>
                             <li><i class="fa-solid fa-check"></i> <strong>شاملة ميزانية الإعلان والتصميم</strong></li>
                             <li><i class="fa-solid fa-check"></i> <strong>تقرير فني متكامل</strong> لتقييم النتائج وتوصيات النمو</li>
                         </ul>
@@ -819,7 +968,7 @@
                             <p>مخصصة للمتاجر والشركات ذات الميزانيات الإعلانية الكبيرة.</p>
                         </div>
                         <div class="price-amount">20% <span>من ميزانية الإعلانات</span></div>
-                        <p style="color:var(--primary); font-weight:700; font-size:0.9rem; margin-top:-20px; margin-bottom:25px;">(بحد أدنى 1,000 ج.م شهرياً)</p>
+                        <p style="color:var(--primary); font-weight:700; font-size:0.9rem; margin-top:-20px; margin-bottom:25px;">(بحد أدنى 2,500 ج.م شهرياً)</p>
                         <ul class="price-features">
                             <li><i class="fa-solid fa-check"></i> إدارة وإحصاء كامل للحملات الإعلانية المدفوعة</li>
                             <li><i class="fa-solid fa-check"></i> A/B Testing مستمر للإعلانات والتصاميم والجمهور</li>
@@ -851,6 +1000,190 @@
                 </div>
             </div>
 
+    </section>
+
+    <!-- LIVE STATS & PROOF -->
+    <!-- <section class="py-100" id="stats" style="border-t: 1px solid var(--border);">
+        <div class="container">
+            <div class="stats-grid reveal">
+                <div class="stat-box-card">
+                    <div class="counter-num">+3.4M</div>
+                    <div class="counter-label">مبيعات محققة للعملاء (ج.م)</div>
+                </div>
+                <div class="stat-box-card">
+                    <div class="counter-num">140+</div>
+                    <div class="counter-label">حملة إعلانية ناجحة</div>
+                </div>
+                <div class="stat-box-card">
+                    <div class="counter-num">4.5x</div>
+                    <div class="counter-label">متوسط عائد الاستثمار (ROAS)</div>
+                </div>
+                <div class="stat-box-card">
+                    <div class="counter-num">98%</div>
+                    <div class="counter-label">نسبة تجديد اشتراك العملاء</div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- FAQ ACCORDION -->
+    <section class="py-100" id="faq" style="background: rgba(255,255,255,0.01);">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="badge"><i class="fa-solid fa-circle-question"></i> الأسئلة الشائعة</div>
+                <h2 class="section-title">كل ما تحتاج <span class="text-neon">معرفته</span> قبل البدء</h2>
+                <p class="section-subtitle">إجابات شفافة عن أكثر الأسئلة تكراراً حول طريقة عملنا ونتائجنا.</p>
+            </div>
+
+            <div class="faq-wrapper reveal">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <div class="faq-question-title">
+                            <i class="fa-solid fa-bolt"></i>
+                            <span>كم يستغرق وقت تجهيز وإطلاق الحملة؟</span>
+                        </div>
+                        <div class="faq-icon"><i class="fa-solid fa-chevron-down"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        ينطلق فريق العمل فوراً بعد استلام البيانات، ويتم تجهيز التصاميم والنصوص الإعلانية وإعداد الحملة وإطلاقها في أقل من 72 ساعة.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <div class="faq-question-title">
+                            <i class="fa-solid fa-chart-line"></i>
+                            <span>هل أحصل على تقارير تفصيلية لأداء الإعلانات؟</span>
+                        </div>
+                        <div class="faq-icon"><i class="fa-solid fa-chevron-down"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        نعم بكل تأكيد! نوفر تقارير أسبوعية وشهرية شفافة توضح الميزانيات المنفقة، عدد العملاء الجدد، ومعدل عائد الاستثمار (ROAS).
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <div class="faq-question-title">
+                            <i class="fa-solid fa-crown"></i>
+                            <span>ما الذي يميز SQUAD MEDIA عن الشركات الأخرى؟</span>
+                        </div>
+                        <div class="faq-icon"><i class="fa-solid fa-chevron-down"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        نحن لا نكتفي بعمل تصاميم، بل نبني Funnel تسويقي وإعلاني متكامل موجه للمبيعات فوراً مع متابعة مستمرة وتعديلات لحظية للأداء.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <div class="faq-question-title">
+                            <i class="fa-solid fa-vial"></i>
+                            <span>هل يمكنني تجربة خدماتكم قبل التعاقد الطويل؟</span>
+                        </div>
+                        <div class="faq-icon"><i class="fa-solid fa-chevron-down"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        نعم! يمكنك الاستفادة من "باقة التجربة (Test Sprint)" لاختبار جودة التصاميم وسرعة أداء الإعلانات بدون أي التزام طويل الأجل.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <div class="faq-question-title">
+                            <i class="fa-solid fa-comments"></i>
+                            <span>كيف يتم التواصل ومتابعة العمل بعد الاشتراك؟</span>
+                        </div>
+                        <div class="faq-icon"><i class="fa-solid fa-chevron-down"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        نخصص لك مدير حسابات ومجموعة واتساب مباشرة مع الفريق الفني لمتابعة التحديثات والاستفسارات على مدار الساعة.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW WE WORK -->
+    <section class="py-100" id="process" style="border-top: 1px solid var(--border);">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="badge"><i class="fa-solid fa-diagram-project"></i> خطوات بسيطة، نتائج مذهلة</div>
+                <h2 class="section-title">كيف <span class="text-neon">نعمل</span> معك؟</h2>
+                <p class="section-subtitle">من أول اتصال حتى مضاعفة مبيعاتك — عملية واضحة وشفافة بالكامل.</p>
+            </div>
+
+            <div class="process-steps reveal">
+                <div class="process-step">
+                    <div class="step-num">01</div>
+                    <div class="step-title">استشارة مجانية</div>
+                    <div class="step-desc">نتعرف على نشاطك وأهدافك ونحلل وضع منافسيك في السوق.</div>
+                </div>
+                <div class="process-step">
+                    <div class="step-num">02</div>
+                    <div class="step-title">خطة النمو</div>
+                    <div class="step-desc">نبني استراتيجية إعلانية وتسويقية مخصصة لنشاطك وميزانيتك.</div>
+                </div>
+                <div class="process-step">
+                    <div class="step-num">03</div>
+                    <div class="step-title">التصميم والإطلاق</div>
+                    <div class="step-desc">نجهّز الإعلانات والتصاميم ونطلق حملتك في أقل من 72 ساعة.</div>
+                </div>
+                <div class="process-step">
+                    <div class="step-num">04</div>
+                    <div class="step-title">تحسين وتوسع</div>
+                    <div class="step-desc">نتابع الأداء يومياً ونضاعف ما ينجح ونلغي ما لا يُربح.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="py-100" id="testimonials" style="background: rgba(255,255,255,0.01);">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="badge"><i class="fa-solid fa-heart"></i> عملاؤنا يتكلمون</div>
+                <h2 class="section-title">نتائج <span class="text-neon">حقيقية</span> من عملاء حقيقيين</h2>
+                <p class="section-subtitle">مش كلامنا، كلام اللي شافوا الفرق بنفسهم.</p>
+            </div>
+
+            <div class="testimonials-grid reveal">
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">قبل SQUAD كنت بصرف على إعلانات بدون نتيجة. دلوقتي المتجر بيجيب طلبات يومية بشكل منتظم والمبيعات زادت 3 مرات في أول شهرين.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">أ</div>
+                        <div class="author-info">
+                            <span class="author-name">أحمد سالم</span>
+                            <span class="author-role">صاحب متجر إلكتروني — القاهرة</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card" style="border-color: var(--border-neon);">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">فريق محترف وسريع جداً. الحملات الإعلانية طلعت بتصاميم على مستوى عالي ومتابعة دايمة. العيادة اتملت بمواعيد في الشهر الأول!</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">د</div>
+                        <div class="author-info">
+                            <span class="author-name">د. منة الله محمود</span>
+                            <span class="author-role">طبيبة أسنان — مركز طبي خاص</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">التقارير الأسبوعية واضحة ومحترمة، وعارف فلوسي بتروح فين. أحسن قرار اتخذته لمطعمي كان إني اشتغلت مع SQUAD MEDIA.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">م</div>
+                        <div class="author-info">
+                            <span class="author-name">محمود الشافعي</span>
+                            <span class="author-role">صاحب سلسلة مطاعم — الإسكندرية</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1105,6 +1438,43 @@
                 if (activePanel) {
                     activePanel.classList.add('active');
                 }
+            });
+        });
+
+        // 6. FAQ Accordion Logic
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                const isOpen = item.classList.contains('active');
+                faqItems.forEach(other => other.classList.remove('active'));
+                if (!isOpen) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // 8. Cursor Glow Spotlight Effect
+        const cursorGlow = document.getElementById('cursorGlow');
+        if (cursorGlow && window.innerWidth > 768) {
+            document.addEventListener('mousemove', (e) => {
+                cursorGlow.style.left = e.clientX + 'px';
+                cursorGlow.style.top = e.clientY + 'px';
+            });
+        } else if (cursorGlow) {
+            cursorGlow.style.display = 'none';
+        }
+
+        // 9. Animated card border glow on hover
+        document.querySelectorAll('.glass-card, .testimonial-card, .stat-box-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                card.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(198,255,0,0.05) 0%, rgba(255,255,255,0.01) 60%)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.background = '';
             });
         });
     </script>
