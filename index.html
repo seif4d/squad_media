@@ -968,7 +968,7 @@
                             <p>مخصصة للمتاجر والشركات ذات الميزانيات الإعلانية الكبيرة.</p>
                         </div>
                         <div class="price-amount">20% <span>من ميزانية الإعلانات</span></div>
-                        <p style="color:var(--primary); font-weight:700; font-size:0.9rem; margin-top:-20px; margin-bottom:25px;">(بحد أدنى 2,500 ج.م شهرياً)</p>
+                        <p style="color:var(--primary); font-weight:700; font-size:0.9rem; margin-top:-20px; margin-bottom:25px;">(بحد أدنى 2,500 ج.م)</p>
                         <ul class="price-features">
                             <li><i class="fa-solid fa-check"></i> إدارة وإحصاء كامل للحملات الإعلانية المدفوعة</li>
                             <li><i class="fa-solid fa-check"></i> A/B Testing مستمر للإعلانات والتصاميم والجمهور</li>
@@ -982,14 +982,15 @@
                     <div class="pricing-card">
                         <div class="price-head">
                             <div class="badge" style="margin-bottom:10px;"><i class="fa-solid fa-handshake"></i> شراكة النمو الحقيقي</div>
-                            <h3>أتعاب + نسبة مبيعات (Rev-Share)</h3>
-                            <p>نموذج الشراكة الكاملة للمتاجر والبراندات القابلة للتوسع السريع.</p>
+                            <h3>نسبة من المبيعات (Rev-Share)</h3>
+                            <p>نموذج الشراكة المبني على الأداء للمتاجر والبراندات القابلة للتوسع السريع.</p>
                         </div>
-                        <div class="price-amount" style="font-size:2.2rem; margin:25px 0 20px;">
-                            أتعاب + % مبيعات
+                        <div class="price-amount" style="font-size:2rem; margin:25px 0 10px;">
+                            0 ج.م أتعاب <span>+ % من المبيعات</span>
                         </div>
-                        <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:25px;">نتشارك معك المخاطرة والنجاح لمضاعفة أرباح نشاطك التجاري.</p>
+                        <p style="color:var(--primary); font-weight:700; font-size:0.9rem; margin-bottom:20px;">(تحاسب على ميزانية الإعلانات فقط — ولا نأخذ أتعاباً إلا عندما تبيع!)</p>
                         <ul class="price-features">
+                            <li><i class="fa-solid fa-check"></i> <strong>بدون أتعاب إدارة:</strong> تدفع ميزانية الإعلانات فقط ونحصل على نسبتنا عند تحقيق المبيعات</li>
                             <li><i class="fa-solid fa-check"></i> بناء Funnel تسويقي وإعلاني متكامل لمنتجاتك</li>
                             <li><i class="fa-solid fa-check"></i> إنتاج تصاميم وفيديوهات إعلانية غير محدودة</li>
                             <li><i class="fa-solid fa-check"></i> تحسين معدل تحويل المتجر/الصفحة (CRO Optimization)</li>
@@ -1393,15 +1394,35 @@
                 const brand = document.getElementById('leadBrand')?.value.trim() || '';
                 const link = document.getElementById('leadLink')?.value.trim() || 'غير محدد';
                 
-                const typeInput = document.getElementById('leadType');
-                const typeText = typeInput?.getAttribute('data-text') || 'غير محدد';
+                const typeContainer = document.getElementById('leadTypeContainer');
+                const typeText = typeContainer?.querySelector('.custom-option.selected')?.textContent?.trim() 
+                              || document.getElementById('leadType')?.getAttribute('data-text') 
+                              || 'غير محدد';
 
-                const budgetInput = document.getElementById('leadBudget');
-                const budgetText = budgetInput?.getAttribute('data-text') || 'غير محدد';
+                const budgetContainer = document.getElementById('leadBudgetContainer');
+                const budgetText = budgetContainer?.querySelector('.custom-option.selected')?.textContent?.trim() 
+                                || document.getElementById('leadBudget')?.getAttribute('data-text') 
+                                || 'غير محدد';
 
-                const waMessage = `مرحباً SQUAD MEDIA 👋\nأود طلب استشارة / بدء العمل معكم:\n\n• *الاسم الكريم:* ${name}\n• *اسم البراند / النشاط:* ${brand}\n• *رابط المتجر/الصفحة:* ${link}\n• *نوع النشاط:* ${typeText}\n• *الميزانية الشهرية للإعلانات:* ${budgetText}`;
+                // Construct creative formatted message
+                const lines = [
+                    "🚀 *طلب استشارة وتطوير نمو | SQUAD MEDIA*",
+                    "",
+                    "مرحباً فريق سكواد! 👋 مهتم بالتعاون معكم لنقل نشاطي التجاري للمستوى التالي 🔥",
+                    "",
+                    "📋 *بيانات الطلب:*",
+                    `👤 *الاسم:* ${name}`,
+                    `🏢 *البراند / النشاط:* ${brand}`,
+                    `🌐 *رابط المتجر / الصفحة:* ${link}`,
+                    `🎯 *نوع النشاط:* ${typeText}`,
+                    `💰 *الميزانية الإعلانية:* ${budgetText}`,
+                    "",
+                    "أنتظر تواصلكم لبدء خطة النمو 📈✨"
+                ];
 
-                const waUrl = `https://wa.me/201042472017?text=${encodeURIComponent(waMessage)}`;
+                const waMessage = lines.join("\n");
+                // Using official api.whatsapp.com URL directly prevents wa.me redirect from stripping line breaks (%0A) and corrupting emojis
+                const waUrl = `https://api.whatsapp.com/send?phone=201042472017&text=${encodeURIComponent(waMessage)}`;
 
                 toast.classList.add('show');
 
