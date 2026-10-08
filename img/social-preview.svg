@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<defs><radialGradient id="glow"><stop stop-color="#c9ff16" stop-opacity=".14"/><stop offset="1" stop-color="#c9ff16" stop-opacity="0"/></radialGradient><linearGradient id="line"><stop stop-color="#c9ff16" stop-opacity="0"/><stop offset=".5" stop-color="#c9ff16"/><stop offset="1" stop-color="#c9ff16" stop-opacity="0"/></linearGradient></defs>
+<rect width="1200" height="630" fill="#0a0a0a"/><ellipse cx="285" cy="270" rx="440" ry="360" fill="url(#glow)"/>
+<ellipse cx="285" cy="275" rx="238" ry="220" fill="none" stroke="#c9ff1635" transform="rotate(-25 285 275)"/>
+<path d="M-20 437Q220 590 515 360T1240 140" stroke="url(#line)" stroke-width="2" fill="none"/>
+<g fill="#c9ff16" opacity=".35"><circle cx="77" cy="72" r="3"/><circle cx="94" cy="72" r="3"/><circle cx="111" cy="72" r="3"/><circle cx="77" cy="89" r="3"/><circle cx="94" cy="89" r="3"/><circle cx="111" cy="89" r="3"/></g>
+<text x="1125" y="77" fill="#aaaa9f" text-anchor="end" font-family="Arial,sans-serif" font-size="14" letter-spacing="3">COMMUNICATE. CREATE. GROW.</text>
+<g transform="translate(118 119) scale(1.3)"><path fill="#fff" d="M31 12h91q17 0 17 17v18H71q-10 0-10 10v44q0 10 10 10h12q8 0 12 7l7 10q7 10-4 15l-44 40v-32H31q-19 0-19-19V31q0-19 19-19Z"/><path fill="#c9ff16" d="M117 50h73q23 0 23 23v93q0 23-23 23h-6v31l-37-31h-29q-17 0-17-16t17-16h27q10 0 10-10v-43q0-10-10-10h-17q-8 0-12-7l-4-6h5q-16 0-16-16t16-15Z"/></g>
+<g transform="translate(451 193) scale(1.3)"><g fill="#fff" transform="translate(12 8) skewX(-7)">
+<path d="M21 0h62L71 17H28q-7 0-7 6t7 6h30q23 0 23 21T58 72H0l12-17h44q7 0 7-6t-7-6H26Q3 43 3 22T21 0Z"/>
+<path fill-rule="evenodd" transform="translate(92)" d="M24 0h34q24 0 24 23v26q0 10-7 16l13 15H63l-8-8H24Q0 72 0 49V23Q0 0 24 0Zm1 18q-6 0-6 7v22q0 7 6 7h13l-9-11h24l9 10q1-2 1-6V25q0-7-6-7Z"/>
+<path transform="translate(188)" d="M0 0h19v47q0 7 7 7h28q7 0 7-7V0h19v49q0 23-24 23H24Q0 72 0 49Z"/>
+<path fill-rule="evenodd" transform="translate(278)" d="M31 0h25l35 72H69l-6-14H25l-7 14H-4Zm12 20L32 42h22Z"/>
+<path fill-rule="evenodd" transform="translate(378)" d="M0 0h47q34 0 34 36T47 72H0V29h19v25h27q16 0 16-18T46 18H0Z"/>
+</g><text x="244" y="121" fill="#c9ff16" text-anchor="middle" font-family="Arial,sans-serif" font-weight="600" font-size="22" letter-spacing="19">MEDIA</text></g>
+<text x="600" y="475" fill="#f5f5f2" text-anchor="middle" direction="rtl" font-family="Cairo,Tahoma,Arial,sans-serif" font-size="43" font-weight="700">تسويق ذكي. نمو يستحق المشاهدة.</text>
+<path d="M90 529h1020" stroke="#34362c"/>
+<text x="90" y="581" fill="#c9ff16" font-family="Arial,sans-serif" font-size="17" letter-spacing="2">SQUADMEDIA.STORE</text>
+<text x="1105" y="581" fill="#b4b4a9" text-anchor="end" font-family="Arial,sans-serif" font-size="15" letter-spacing="2">STRATEGY / CONTENT / DESIGN / ADS</text>
+</svg>

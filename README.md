@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
 [![RTL Supported](https://img.shields.io/badge/Language-Arabic%20(RTL)-008080?style=for-the-badge)](#)
 
-> **SQUAD MEDIA** is an Arabic, RTL landing page for a digital marketing agency. The charcoal and lime design combines a geometric growth illustration, creative service cards, the full team image, accessible pricing tabs, testimonials, native FAQs, and a WhatsApp consultation form. Built with HTML, CSS, and vanilla JavaScript, with no framework, build step, or backend.
+> **SQUAD MEDIA** is an Arabic, RTL landing page for a digital marketing agency. The conversation identity combines an editable vector logo, black/white/lime colors, a CSS-built phone scene, creative service cards, the full team image, accessible pricing tabs, testimonials, native FAQs, and a WhatsApp consultation form. Built with HTML, CSS, and vanilla JavaScript, with no framework, build step, or backend.
 
 ---
 
@@ -19,7 +19,8 @@
 
 ## ✨ Key Features
 
-- 💎 **Bold Dark UI:** Charcoal backgrounds, lime accents (`#C6FF00`), large Arabic typography, a layered studio illustration, staggered service cards with original CSS/SVG artwork, an ivory accent card, and a full, uncropped team poster. Illustrations are decorative concepts, not client performance reports.
+- 💎 **Conversation Identity:** Neutral black (`#0A0A0A`), white, and lime (`#C9FF16`), large Arabic typography, a phone illustration built in CSS, staggered service cards, and a full, uncropped team poster. The two-bubble mark and angular wordmark are SVG redraws based on the supplied identity images, shared across the header, hero, and footer. Illustrations are decorative concepts, not client performance reports.
+- 🔖 **Brand Assets:** Editable `brand-mark.svg`, `brand-wordmark.svg`, and `brand-lockup.svg`, plus SVG/ICO browser icons, an Apple touch icon, and a 1200×630 PNG social preview with its SVG source. Sharing titles and descriptions follow the website's “تسويق ذكي. نمو يستحق المشاهدة.” positioning.
 - 🧮 **Live Fee Estimate:** An accessible calculator explains Growth and Scale's excess-only 10% fee and standalone ads' higher-of-3,000-or-15% rule. Empty/negative input prompts a correction; spend above 100,000 EGP requests a custom quote. Ad spend, taxes, and additional services remain separate. The calculator appears only when JavaScript is available.
 - 💬 **WhatsApp Consultation Form:** Validates the visitor's details and prepares a structured message. The visitor reviews and sends it in WhatsApp. Data stays in the form, and a prepared-message link remains available when popups are blocked; editing a field clears the old link.
 - 📊 **Interactive Pricing Engine:** Switchable tabbed interface supporting 3 business models:
@@ -29,7 +30,6 @@
 
   Ad spend is separate in every offer. Production counts are per brand across channels; stories are adapted content and Reels use client footage. Photography, inbox handling, bots, CRM, and third-party subscriptions are extra. Content plans include two grouped revision rounds per batch. Spend above 100,000 EGP/month, extra ad platforms, or additional accounts needs a custom quote. Package buttons preselect the service in the contact form and include it in the prepared WhatsApp message.
 - 🎨 **Native Form Controls:** Visible labels and dark native selects with browser validation, touch, and keyboard support.
-- ♾️ **Infinite CSS Marquee:** Seamless, infinite-scrolling ticker showcasing key agency services.
 - 📱 **Responsive & RTL First:** A mobile drawer with Escape dismissal, a keyboard focus loop, and focus return. Pricing tabs support RTL arrows, Home, and End. Active sections are marked in navigation. A floating WhatsApp shortcut appears only when the desktop gutter has sufficient room.
 - ⚡ **Zero Framework Overhead:** Pure, dependency-free Vanilla JavaScript and modern CSS for lightning-fast loading speeds and high SEO performance scores.
 - 📜 **Progressive Enhancement:** Subtle entry motion respects reduced-motion preferences. Content stays visible without animations. Without JavaScript, all pricing panels, native FAQ controls, navigation, and a direct WhatsApp fallback remain available.
@@ -53,8 +53,15 @@ squad_media/
 ├── index.html            # Main HTML landing page structure
 ├── styles.css            # Design tokens, responsive layouts, and motion
 ├── script.js             # Navigation, pricing tabs, FAQs, WhatsApp message
-├── img/                  # Assets folder (Favicon, team preview image)
+├── img/                  # Brand vectors, browser icons, social preview, team photo
+│   ├── brand-mark.svg
+│   ├── brand-wordmark.svg
+│   ├── brand-lockup.svg
+│   ├── favicon.svg
 │   ├── favicon.ico
+│   ├── apple-touch-icon.png
+│   ├── social-preview.svg
+│   ├── social-preview.png
 │   └── team.png
 └── README.md             # Project documentation
 ```
@@ -68,11 +75,11 @@ Theme variables are centralized at the beginning of `styles.css`:
 
 ```css
 :root {
-    --primary: #C6FF00;             /* Neon Accent Color */
-    --primary-hover: #d5ff4d;       /* Hover Accent Color */
-    --bg-base: #090b09;             /* Main Background */
-    --text-main: #f4f5ef;           /* Heading & Primary Text */
-    --text-muted: #a8afa0;          /* Secondary Muted Text */
+    --primary: #C9FF16;             /* Neon Accent Color */
+    --primary-hover: #dcff70;       /* Hover Accent Color */
+    --bg-base: #0a0a0a;             /* Main Background */
+    --text-main: #f5f5f2;           /* Heading & Primary Text */
+    --text-muted: #adada7;          /* Secondary Muted Text */
     --font-main: 'Cairo', sans-serif;
     --font-title: 'Changa', sans-serif;
 }
@@ -115,7 +122,7 @@ Modify the footer links inside the `.social-links` container:
 
 ## Verification
 
-Review at **360, 390, 768, 1024, and 1440 px**, including all three pricing panels. Check for horizontal overflow, the full team image, and usable form controls. Use a keyboard to test the drawer, tab arrows/Home/End, FAQ Enter/Space, and visible focus. Verify missing fields, Arabic/emoji/link encoding, preserved form data, and the blocked-popup fallback. Also check reduced-motion and JavaScript-disabled behavior. The redesign is local; publishing is a separate action.
+Review at **360, 390, 768, 1024, and 1440 px**, including all three pricing panels. Check for horizontal overflow, the full team image, and usable form controls. Use a keyboard to test the drawer, tab arrows/Home/End, FAQ Enter/Space, and visible focus. Verify missing fields, Arabic/emoji/link encoding, preserved form data, and the blocked-popup fallback. Also check reduced-motion and JavaScript-disabled behavior. GitHub Pages publishes the repository root from `main` to `https://squadmedia.store/`; pushing to `main` triggers deployment.
 
 Calculator checks: Growth at 30,000 EGP spend → 9,500 EGP fee; Scale at 50,000 → 14,500; ads-only at 30,000 → 4,500. Check zero spend, exact caps (20,000 / 40,000), the 100,000 custom-quote boundary, empty/negative values, and decimal inputs. Pressing Enter recalculates without navigating or clearing visitor data.
 
