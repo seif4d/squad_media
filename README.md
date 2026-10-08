@@ -21,6 +21,7 @@
 
 - 💎 **Conversation Identity:** Neutral black (`#0A0A0A`), white, and lime (`#C9FF16`), large Arabic typography, a phone illustration built in CSS, staggered service cards, and a full, uncropped team poster. The two-bubble mark and angular wordmark are SVG redraws based on the supplied identity images, shared across the header, hero, and footer. Illustrations are decorative concepts, not client performance reports.
 - 🔖 **Brand Assets:** Editable `brand-mark.svg`, `brand-wordmark.svg`, and `brand-lockup.svg`, plus SVG/ICO browser icons, an Apple touch icon, and a 1200×630 PNG social preview with its SVG source. Sharing titles and descriptions follow the website's “تسويق ذكي. نمو يستحق المشاهدة.” positioning.
+- 🗂️ **Portfolio & Project Studies:** Real client work appears before pricing, with Via Cairo Tours (web development) and Dar Alezz in Riyadh (content, design, and ads). Preview images link to the full captures/original creatives and the actual client properties. Native expandable studies explain the task, SQUAD's scope, and visible deliverables without adding unverified campaign metrics. Work sources and attribution are documented in `research/project-sources-2026-10-08.md`.
 - 🧮 **Live Fee Estimate:** An accessible calculator explains Growth and Scale's excess-only 10% fee and standalone ads' higher-of-3,000-or-15% rule. Empty/negative input prompts a correction; spend above 100,000 EGP requests a custom quote. Ad spend, taxes, and additional services remain separate. The calculator appears only when JavaScript is available.
 - 💬 **WhatsApp Consultation Form:** Validates the visitor's details and prepares a structured message. The visitor reviews and sends it in WhatsApp. Data stays in the form, and a prepared-message link remains available when popups are blocked; editing a field clears the old link.
 - 📊 **Interactive Pricing Engine:** Switchable tabbed interface supporting 3 business models:
@@ -62,6 +63,7 @@ squad_media/
 │   ├── apple-touch-icon.png
 │   ├── social-preview.svg
 │   ├── social-preview.png
+│   ├── work/             # Actual client website captures and published creatives
 │   └── team.png
 └── README.md             # Project documentation
 ```
@@ -127,6 +129,8 @@ Modify the footer links inside the `.social-links` container:
 Review at **360, 390, 768, 1024, and 1440 px**, including all three pricing panels. Check for horizontal overflow, the full team image, and usable form controls. Use a keyboard to test the drawer, tab arrows/Home/End, FAQ Enter/Space, and visible focus. Verify missing fields, Arabic/emoji/link encoding, preserved form data, and the blocked-popup fallback. Also check reduced-motion and JavaScript-disabled behavior. GitHub Pages publishes the repository root from `main` to `https://squadmedia.store/`; pushing to `main` triggers deployment.
 
 Calculator checks: Growth at 30,000 EGP spend → 9,500 EGP fee; Scale at 50,000 → 14,500; ads-only at 30,000 → 4,500. Check zero spend, exact caps (20,000 / 40,000), the 100,000 custom-quote boundary, empty/negative values, and decimal inputs. Pressing Enter recalculates without navigating or clearing visitor data.
+
+Portfolio checks: both project studies open with click, Enter, and Space, and remain usable without JavaScript. Verify previews and full-image links, the mobile navigation link, the consultation CTA, and expanded studies at 320–1440 px. Keep the layout viewport equal to the emulated mobile width to catch automatic browser zoom caused by overflowing content.
 
 ---
 
