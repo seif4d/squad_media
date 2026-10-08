@@ -120,6 +120,8 @@ Modify the footer links inside the `.social-links` container:
 3. **Run locally:**
    Open `index.html` directly, or run `python -m http.server 4173 --bind 127.0.0.1` from this directory and visit [the local preview](http://127.0.0.1:4173). No package installation is needed. Google Fonts and Font Awesome load externally; system font fallbacks remain available.
 
+4. **Keep deployed assets in sync:** The CSS and JavaScript URLs in `index.html` include a `?v=` content version so returning visitors do not combine new markup with cached old styling. After editing either file, update its version to the first 12 characters of that file's SHA-256 hash before publishing. The logo also has safe intrinsic dimensions if styling is temporarily unavailable.
+
 ## Verification
 
 Review at **360, 390, 768, 1024, and 1440 px**, including all three pricing panels. Check for horizontal overflow, the full team image, and usable form controls. Use a keyboard to test the drawer, tab arrows/Home/End, FAQ Enter/Space, and visible focus. Verify missing fields, Arabic/emoji/link encoding, preserved form data, and the blocked-popup fallback. Also check reduced-motion and JavaScript-disabled behavior. GitHub Pages publishes the repository root from `main` to `https://squadmedia.store/`; pushing to `main` triggers deployment.
