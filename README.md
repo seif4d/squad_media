@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
 [![RTL Supported](https://img.shields.io/badge/Language-Arabic%20(RTL)-008080?style=for-the-badge)](#)
 
-> **SQUAD MEDIA** is a high-converting, modern, dark-themed Glassmorphism landing page engineered for digital marketing agencies, media buyers, and growth partners. Built with pure HTML5, CSS3, and Vanilla JavaScript, it focuses on high conversion rates, direct WhatsApp lead acquisition, dynamic tabbed pricing, and ultra-fast performance.
+> **SQUAD MEDIA** is an Arabic, RTL landing page for a digital marketing agency. The charcoal and lime design combines a geometric growth illustration, creative service cards, the full team image, accessible pricing tabs, testimonials, native FAQs, and a WhatsApp consultation form. Built with HTML, CSS, and vanilla JavaScript, with no framework, build step, or backend.
 
 ---
 
@@ -19,17 +19,20 @@
 
 ## ✨ Key Features
 
-- 💎 **Modern Dark Glassmorphism UI:** Features neon accent highlights (`#C6FF00`), dynamic ambient glow blobs, dynamic floating 3D cards, and backdrop blur filters.
-- 💬 **Instant WhatsApp Lead Generation Engine:** A streamlined custom form that automatically parses client details (Name, Brand, URL, Business Type, Budget) and formats a structured WhatsApp message to instantly open a chat.
+- 💎 **Bold Dark UI:** Charcoal backgrounds, lime accents (`#C6FF00`), large Arabic typography, a layered studio illustration, staggered service cards with original CSS/SVG artwork, an ivory accent card, and a full, uncropped team poster. Illustrations are decorative concepts, not client performance reports.
+- 🧮 **Live Fee Estimate:** An accessible calculator explains Growth and Scale's excess-only 10% fee and standalone ads' higher-of-3,000-or-15% rule. Empty/negative input prompts a correction; spend above 100,000 EGP requests a custom quote. Ad spend, taxes, and additional services remain separate. The calculator appears only when JavaScript is available.
+- 💬 **WhatsApp Consultation Form:** Validates the visitor's details and prepares a structured message. The visitor reviews and sends it in WhatsApp. Data stays in the form, and a prepared-message link remains available when popups are blocked; editing a field clears the old link.
 - 📊 **Interactive Pricing Engine:** Switchable tabbed interface supporting 3 business models:
-  1. **Test Sprint:** Single-tier risk-free trial.
-  2. **Core Retainers:** Monthly subscription packages (*Bāsiq*, *Growth*, *Pro*).
-  3. **Scale & Rev-Share:** Media buying commissions & Revenue-share models.
-- 🎨 **Custom Vanilla JS Dropdowns:** Custom-built accessible custom select controls replacing native browser dropdowns for dark-mode consistency.
+  1. **Monthly packages (default):** Presence 4,500 / Growth 8,500 / Scale 13,500 EGP. Growth includes Meta management up to 20,000 EGP spend; Scale up to 40,000. Only the excess approved spend adds a 10% fee.
+  2. **14-day campaign trial:** 2,500 EGP service fee, four creatives and copy, one Meta campaign, and a short report.
+  3. **Ads & partnerships:** Standalone Meta management at the higher of 3,000 EGP/month or 15% of spend; performance partnerships require a scoped custom offer.
+
+  Ad spend is separate in every offer. Production counts are per brand across channels; stories are adapted content and Reels use client footage. Photography, inbox handling, bots, CRM, and third-party subscriptions are extra. Content plans include two grouped revision rounds per batch. Spend above 100,000 EGP/month, extra ad platforms, or additional accounts needs a custom quote. Package buttons preselect the service in the contact form and include it in the prepared WhatsApp message.
+- 🎨 **Native Form Controls:** Visible labels and dark native selects with browser validation, touch, and keyboard support.
 - ♾️ **Infinite CSS Marquee:** Seamless, infinite-scrolling ticker showcasing key agency services.
-- 📱 **100% Fully Responsive & RTL First:** Custom mobile drawer navigation, touch-friendly UI components, optimized tap targets, and full Right-To-Left (Arabic) layout support.
+- 📱 **Responsive & RTL First:** A mobile drawer with Escape dismissal, a keyboard focus loop, and focus return. Pricing tabs support RTL arrows, Home, and End. Active sections are marked in navigation. A floating WhatsApp shortcut appears only when the desktop gutter has sufficient room.
 - ⚡ **Zero Framework Overhead:** Pure, dependency-free Vanilla JavaScript and modern CSS for lightning-fast loading speeds and high SEO performance scores.
-- 📜 **Scroll Animations:** Native `IntersectionObserver` triggered reveal effects (`.reveal`, `.reveal-left`, `.reveal-right`).
+- 📜 **Progressive Enhancement:** Subtle entry motion respects reduced-motion preferences. Content stays visible without animations. Without JavaScript, all pricing panels, native FAQ controls, navigation, and a direct WhatsApp fallback remain available.
 
 ---
 
@@ -48,6 +51,8 @@
 ```text
 squad_media/
 ├── index.html            # Main HTML landing page structure
+├── styles.css            # Design tokens, responsive layouts, and motion
+├── script.js             # Navigation, pricing tabs, FAQs, WhatsApp message
 ├── img/                  # Assets folder (Favicon, team preview image)
 │   ├── favicon.ico
 │   └── team.png
@@ -59,27 +64,27 @@ squad_media/
 ## ⚙️ Customization Guide
 
 ### 1. Changing Colors & Styling Variables
-All theme styles are centralized using CSS variables inside `index.html`:
+Theme variables are centralized at the beginning of `styles.css`:
 
 ```css
 :root {
     --primary: #C6FF00;             /* Neon Accent Color */
-    --primary-hover: #b3e600;       /* Hover Accent Color */
-    --bg-base: #050505;             /* Main Background */
-    --text-main: #ffffff;           /* Heading & Primary Text */
-    --text-muted: #a1a1aa;          /* Secondary Muted Text */
+    --primary-hover: #d5ff4d;       /* Hover Accent Color */
+    --bg-base: #090b09;             /* Main Background */
+    --text-main: #f4f5ef;           /* Heading & Primary Text */
+    --text-muted: #a8afa0;          /* Secondary Muted Text */
     --font-main: 'Cairo', sans-serif;
     --font-title: 'Changa', sans-serif;
 }
 ```
 
 ### 2. Updating WhatsApp Phone Number
-Search for `201042472017` in `index.html` and replace it with your target WhatsApp number (in international format without `+`):
+Replace every occurrence of `201042472017` in **both `index.html` and `script.js`**, including the hidden form phone field, with your target number (international format without `+`):
 
 - **Floating WhatsApp Button:** `<a href="https://wa.me/YOUR_NUMBER"...>`
 - **Form Submit Handler in JavaScript:**
   ```javascript
-  const waUrl = `https://wa.me/YOUR_NUMBER?text=${encodeURIComponent(waMessage)}`;
+  const url = `https://api.whatsapp.com/send?phone=YOUR_NUMBER&text=${encodeURIComponent(message)}`;
   ```
 
 ### 3. Updating Social Media Links
@@ -106,7 +111,13 @@ Modify the footer links inside the `.social-links` container:
    ```
 
 3. **Run locally:**
-   Simply open `index.html` in any modern web browser or use a live server extension (e.g., *Live Server* extension in VS Code).
+   Open `index.html` directly, or run `python -m http.server 4173 --bind 127.0.0.1` from this directory and visit [the local preview](http://127.0.0.1:4173). No package installation is needed. Google Fonts and Font Awesome load externally; system font fallbacks remain available.
+
+## Verification
+
+Review at **360, 390, 768, 1024, and 1440 px**, including all three pricing panels. Check for horizontal overflow, the full team image, and usable form controls. Use a keyboard to test the drawer, tab arrows/Home/End, FAQ Enter/Space, and visible focus. Verify missing fields, Arabic/emoji/link encoding, preserved form data, and the blocked-popup fallback. Also check reduced-motion and JavaScript-disabled behavior. The redesign is local; publishing is a separate action.
+
+Calculator checks: Growth at 30,000 EGP spend → 9,500 EGP fee; Scale at 50,000 → 14,500; ads-only at 30,000 → 4,500. Check zero spend, exact caps (20,000 / 40,000), the 100,000 custom-quote boundary, empty/negative values, and decimal inputs. Pressing Enter recalculates without navigating or clearing visitor data.
 
 ---
 

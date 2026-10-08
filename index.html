@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SQUAD MEDIA | تسويق ذكي. نتائج سريعة.</title>
+    <title>SQUAD MEDIA | تسويق ذكي. نمو يستحق المشاهدة.</title>
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
@@ -33,1088 +33,85 @@
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <style>
-        /* ==========================================
-           1. VARIABLES & BASE SETUP
-           ========================================== */
-        :root {
-            --primary: #C6FF00;
-            --primary-hover: #b3e600;
-            --bg-base: #050505;
-            --bg-surface: rgba(255, 255, 255, 0.02);
-            --bg-surface-hover: rgba(255, 255, 255, 0.04);
-            --text-main: #ffffff;
-            --text-muted: #a1a1aa;
-            --border: rgba(255, 255, 255, 0.08);
-            --border-neon: rgba(198, 255, 0, 0.2);
-            --font-main: 'Cairo', sans-serif;
-            --font-title: 'Changa', sans-serif;
-            --glass-blur: blur(12px);
-            --transition-bounce: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        html { scroll-behavior: smooth; }
-
-        body {
-            background-color: var(--bg-base);
-            color: var(--text-main);
-            font-family: var(--font-main);
-            line-height: 1.6;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* Noise Texture Overlay */
-        body::before {
-            content: '';
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-            opacity: 0.022;
-            pointer-events: none;
-            z-index: 9999;
-        }
-
-        /* Cursor Glow Spotlight */
-        .cursor-glow {
-            position: fixed;
-            width: 450px; height: 450px;
-            background: radial-gradient(circle, rgba(198, 255, 0, 0.06) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            z-index: 0;
-            transition: transform 0.08s linear;
-        }
-
-        /* Animated Gradient Hero Title */
-        @keyframes gradient-shift {
-            0%   { background-position: 0% 50%; }
-            50%  { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        .text-animated {
-            background: linear-gradient(270deg, #C6FF00, #00FFD1, #C6FF00, #aaff00);
-            background-size: 300% 300%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: gradient-shift 4s ease infinite;
-        }
-
-        /* Testimonials */
-        .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 22px; }
-        .testimonial-card {
-            background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
-            border: 1px solid var(--border); border-radius: 20px; padding: 28px 24px;
-            backdrop-filter: var(--glass-blur); transition: var(--transition-bounce);
-            position: relative; overflow: hidden;
-        }
-        .testimonial-card::before {
-            content: '\201C';
-            position: absolute; top: 10px; left: 20px;
-            font-size: 6rem; line-height: 1; color: rgba(198,255,0,0.07);
-            font-family: Georgia, serif; pointer-events: none;
-        }
-        .testimonial-card:hover { border-color: var(--border-neon); transform: translateY(-5px); }
-        .testimonial-stars { color: #f59e0b; font-size: 0.9rem; margin-bottom: 14px; letter-spacing: 3px; }
-        .testimonial-text { color: #d4d4d8; font-size: 0.95rem; line-height: 1.7; margin-bottom: 22px; font-style: italic; }
-        .testimonial-author { display: flex; align-items: center; gap: 12px; }
-        .author-avatar {
-            width: 42px; height: 42px; border-radius: 50%;
-            background: linear-gradient(135deg, rgba(198,255,0,0.4) 0%, rgba(198,255,0,0.1) 100%);
-            border: 2px solid var(--border-neon);
-            display: flex; align-items: center; justify-content: center;
-            font-family: var(--font-title); font-size: 1.1rem; font-weight: 800; color: var(--primary);
-        }
-        .author-info { display: flex; flex-direction: column; }
-        .author-name { font-weight: 700; font-size: 0.95rem; color: #fff; }
-        .author-role { font-size: 0.8rem; color: var(--text-muted); }
-
-        /* Process Steps */
-        .process-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0; position: relative; }
-        .process-steps::before {
-            content: ''; position: absolute; top: 32px; right: 0; left: 0;
-            height: 1px; background: linear-gradient(90deg, transparent, var(--border-neon), transparent);
-        }
-        @media (max-width: 768px) {
-            .process-steps::before { display: none; }
-            .process-steps { gap: 20px; }
-        }
-        .process-step { text-align: center; padding: 0 20px; position: relative; }
-        .step-num {
-            width: 64px; height: 64px; border-radius: 50%;
-            background: var(--bg-base); border: 2px solid var(--border-neon);
-            display: flex; align-items: center; justify-content: center;
-            font-family: var(--font-title); font-size: 1.4rem; font-weight: 900; color: var(--primary);
-            margin: 0 auto 20px; position: relative; z-index: 1;
-            box-shadow: 0 0 20px rgba(198,255,0,0.15);
-            transition: all 0.3s ease;
-        }
-        .process-step:hover .step-num { background: var(--primary); color: #000; box-shadow: 0 0 35px rgba(198,255,0,0.4); }
-        .step-title { font-family: var(--font-title); font-size: 1.1rem; margin-bottom: 8px; }
-        .step-desc { color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; max-width: 180px; margin: 0 auto; }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg-base); }
-        ::-webkit-scrollbar-thumb { background: rgba(198, 255, 0, 0.3); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
-
-        /* Ambient Glow Blobs (Background) */
-        .ambient-glow {
-            position: absolute; width: 600px; height: 600px;
-            background: radial-gradient(circle, rgba(198, 255, 0, 0.1) 0%, rgba(0,0,0,0) 70%);
-            border-radius: 50%; z-index: -1; pointer-events: none;
-            filter: blur(60px); animation: pulse-glow 8s infinite alternate;
-        }
-        .glow-1 { top: -10%; left: -10%; }
-        .glow-2 { bottom: 20%; right: -10%; background: radial-gradient(circle, rgba(198, 255, 0, 0.05) 0%, rgba(0,0,0,0) 70%); }
-
-        @keyframes pulse-glow {
-            0% { transform: scale(1) translate(0, 0); opacity: 0.5; }
-            100% { transform: scale(1.2) translate(50px, 50px); opacity: 1; }
-        }
-
-        a { text-decoration: none; color: inherit; }
-        ul { list-style: none; }
-        .container { width: 90%; max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
-
-        /* Typography & Utils */
-        .text-gradient {
-            background: linear-gradient(90deg, #fff, var(--text-muted));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-        .text-neon { color: var(--primary); text-shadow: 0 0 20px rgba(198, 255, 0, 0.4); }
-
-        .badge {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 8px 16px; background: rgba(198, 255, 0, 0.05);
-            border: 1px solid var(--border-neon); color: var(--primary);
-            border-radius: 50px; font-size: 0.85rem; font-weight: 700;
-            backdrop-filter: var(--glass-blur); margin-bottom: 20px;
-        }
-
-        /* Buttons */
-        .btn {
-            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-            padding: 14px 32px; border-radius: 12px; font-weight: 700; font-size: 1rem;
-            cursor: pointer; transition: var(--transition-bounce); border: none; text-align: center;
-            position: relative; overflow: hidden; z-index: 1;
-        }
-        .btn-primary {
-            background-color: var(--primary); color: #000;
-            box-shadow: 0 10px 30px rgba(198, 255, 0, 0.2);
-        }
-        .btn-primary::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
-            transition: all 0.5s ease; z-index: -1;
-        }
-        .btn-primary:hover::before { left: 100%; }
-        .btn-primary:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(198, 255, 0, 0.4); }
-
-        .btn-outline {
-            background: rgba(255,255,255,0.02); color: var(--text-main);
-            border: 1px solid var(--border); backdrop-filter: var(--glass-blur);
-        }
-        .btn-outline:hover {
-            border-color: var(--primary); color: var(--primary); transform: translateY(-5px);
-            background: rgba(198, 255, 0, 0.05);
-        }
-
-        /* Animation Classes (Triggered by JS) */
-        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s ease-out; }
-        .reveal-left { opacity: 0; transform: translateX(-50px); transition: all 0.8s ease-out; }
-        .reveal-right { opacity: 0; transform: translateX(50px); transition: all 0.8s ease-out; }
-        .reveal.active, .reveal-left.active, .reveal-right.active { opacity: 1; transform: translate(0, 0); }
-        .delay-1 { transition-delay: 0.1s; } .delay-2 { transition-delay: 0.2s; } .delay-3 { transition-delay: 0.3s; }
-
-        /* ==========================================
-           2. HEADER (GLASSMORPHISM)
-           ========================================== */
-        header {
-            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
-            padding: 20px 0; transition: all 0.4s ease; border-bottom: 1px solid transparent;
-        }
-        header.scrolled {
-            padding: 12px 0; background: rgba(5, 5, 5, 0.8);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        .nav-container { display: flex; justify-content: space-between; align-items: center; }
-        
-        .logo { display: flex; align-items: center; gap: 12px; font-family: var(--font-title); font-size: 1.6rem; font-weight: 800; direction: ltr; }
-        .logo-icon {
-            background: var(--primary); color: #000; width: 38px; height: 38px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.4rem; border-radius: 8px; transform: skewX(-12deg);
-        }
-        
-        .nav-links { display: flex; gap: 35px; align-items: center; }
-        .nav-links a { font-weight: 600; font-size: 0.95rem; color: #ccc; transition: all 0.3s; position: relative; }
-        .nav-links a::after {
-            content: ''; position: absolute; bottom: -5px; right: 0; width: 0%; height: 2px;
-            background: var(--primary); transition: width 0.3s ease;
-        }
-        .nav-links a:hover { color: #fff; }
-        .nav-links a:hover::after { width: 100%; }
-
-        .mobile-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: #fff; z-index: 1001; }
-
-        /* ==========================================
-           3. HERO SECTION (IMMERSIVE)
-           ========================================== */
-        .hero { padding: clamp(110px, 12vw, 150px) 0 clamp(50px, 8vw, 80px); position: relative; }
-        .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
-        
-        .hero-text h1 { font-family: var(--font-title); font-size: clamp(2rem, 4.2vw, 3.3rem); line-height: 1.2; margin-bottom: 20px; }
-        .hero-text p { font-size: clamp(0.95rem, 2vw, 1.05rem); color: var(--text-muted); margin-bottom: 30px; line-height: 1.7; max-width: 90%; }
-        .hero-btns { display: flex; gap: 15px; flex-wrap: wrap; }
-
-        /* Floating 3D Elements */
-        .hero-visual { position: relative; perspective: 1000px; }
-        .floating-card {
-            background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-neon);
-            backdrop-filter: blur(20px); border-radius: 20px; padding: 28px 24px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.05);
-            transform: rotateY(-10deg) rotateX(5deg); animation: float 6s ease-in-out infinite;
-        }
-        @keyframes float {
-            0%, 100% { transform: rotateY(-10deg) rotateX(5deg) translateY(0); }
-            50% { transform: rotateY(-10deg) rotateX(5deg) translateY(-15px); }
-        }
-
-        .stat-row { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
-        .stat-row:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
-        .stat-icon {
-            width: 46px; height: 46px; border-radius: 12px; background: rgba(198, 255, 0, 0.1);
-            color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; box-shadow: inset 0 0 20px rgba(198, 255, 0, 0.05);
-        }
-        .stat-info h3 { font-family: var(--font-title); font-size: 1.35rem; color: #fff; line-height: 1.2; margin-bottom: 3px; }
-        .stat-info p { color: var(--text-muted); font-size: 0.85rem; }
-
-        /* Floating Badges */
-        .float-badge {
-            position: absolute; background: var(--bg-surface); border: 1px solid var(--border);
-            padding: 8px 16px; border-radius: 50px; backdrop-filter: blur(10px);
-            display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 0.8rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 2;
-        }
-        .float-1 { top: -15px; right: -20px; animation: float 5s ease-in-out infinite alternate; }
-        .float-2 { bottom: -15px; left: -15px; animation: float 7s ease-in-out infinite alternate-reverse; }
-
-        /* ==========================================
-           4. INFINITE MARQUEE
-           ========================================== */
-        .marquee-wrapper {
-            width: 100%; overflow: hidden; background: var(--bg-surface);
-            border-y: 1px solid var(--border); padding: 18px 0; display: flex; white-space: nowrap;
-        }
-        .marquee { display: flex; animation: scroll-marquee 20s linear infinite; gap: 40px; padding-right: 40px; }
-        .marquee span {
-            font-family: var(--font-title); font-size: 1.15rem; color: var(--text-muted);
-            display: flex; align-items: center; gap: 12px; font-weight: 700; text-transform: uppercase;
-        }
-        .marquee span i { color: var(--primary); font-size: 0.9rem; }
-        @keyframes scroll-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(100%); } }
-
-        /* ==========================================
-           5. SECTION HEADERS
-           ========================================== */
-        .section-header { text-align: center; margin-bottom: 45px; }
-        .section-title { font-family: var(--font-title); font-size: clamp(1.6rem, 3.5vw, 2.3rem); margin-bottom: 12px; }
-        .section-subtitle { color: var(--text-muted); font-size: 0.95rem; max-width: 550px; margin: 0 auto; line-height: 1.6; }
-
-        /* ==========================================
-           6. FEATURES & SERVICES (GLASS CARDS)
-           ========================================== */
-        .py-100 { padding: 70px 0; }
-        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
-
-        .glass-card {
-            background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
-            border: 1px solid var(--border); border-radius: 20px; padding: 30px 24px;
-            backdrop-filter: var(--glass-blur); transition: var(--transition-bounce); position: relative; overflow: hidden;
-        }
-        .glass-card::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 0%, rgba(198,255,0,0.1) 0%, transparent 60%);
-            opacity: 0; transition: 0.4s ease;
-        }
-        .glass-card:hover { transform: translateY(-10px); border-color: rgba(198, 255, 0, 0.3); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-        .glass-card:hover::before { opacity: 1; }
-
-        .icon-box {
-            width: 52px; height: 52px; border-radius: 14px; margin-bottom: 18px;
-            background: linear-gradient(135deg, rgba(198,255,0,0.2) 0%, transparent 100%);
-            border: 1px solid var(--border-neon); display: flex; align-items: center; justify-content: center;
-            font-size: 1.4rem; color: var(--primary);
-        }
-        .glass-card h3 { font-family: var(--font-title); font-size: 1.25rem; margin-bottom: 10px; }
-        .glass-card p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; }
-        
-        .list-items { margin-top: 18px; border-top: 1px solid var(--border); padding-top: 15px; }
-        .list-items li { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 0.88rem; color: #ddd; }
-        .list-items li i { color: var(--primary); font-size: 0.75rem; background: rgba(198,255,0,0.1); padding: 4px; border-radius: 50%; }
-
-        /* ==========================================
-           7. PRICING (MODERN DASHBOARD STYLE)
-           ========================================== */
-        .pricing-nav {
-            display: flex; justify-content: center; align-items: center;
-            gap: 10px; margin-bottom: 35px; flex-wrap: wrap;
-        }
-        .pricing-tab-btn {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border);
-            padding: 10px 22px; border-radius: 50px;
-            color: var(--text-muted); font-weight: 700; font-size: 0.88rem;
-            cursor: pointer; transition: all 0.3s ease;
-            display: inline-flex; align-items: center; gap: 8px;
-            backdrop-filter: var(--glass-blur);
-        }
-        .pricing-tab-btn:hover {
-            color: #fff; border-color: rgba(198, 255, 0, 0.4);
-            background: rgba(198, 255, 0, 0.05);
-        }
-        .pricing-tab-btn.active {
-            background: var(--primary); color: #000;
-            border-color: var(--primary);
-            box-shadow: 0 0 25px rgba(198, 255, 0, 0.35);
-        }
-
-        .tab-panel { display: none; }
-        .tab-panel.active { display: block; animation: tabFadeIn 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) forwards; }
-        @keyframes tabFadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .pricing-banner-card {
-            background: linear-gradient(135deg, rgba(198, 255, 0, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
-            border: 1px solid var(--border-neon);
-            border-radius: 20px; padding: 30px 28px;
-            max-width: 900px; margin: 0 auto;
-            display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: center;
-            backdrop-filter: var(--glass-blur);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-        }
-        @media (max-width: 768px) {
-            .pricing-banner-card { grid-template-columns: 1fr; padding: 22px 18px; gap: 20px; }
-        }
-
-        .pricing-grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
-
-        .pricing-card {
-            background: var(--bg-surface); border: 1px solid var(--border);
-            border-radius: 20px; padding: 28px 24px; display: flex; flex-direction: column;
-            transition: var(--transition-bounce);
-        }
-        .pricing-card.premium {
-            background: linear-gradient(180deg, rgba(198,255,0,0.05) 0%, rgba(0,0,0,0) 100%);
-            border: 1px solid var(--border-neon); position: relative;
-        }
-        @media (min-width: 1024px) {
-            .pricing-card.premium { transform: scale(1.02); }
-            .pricing-card.premium:hover { transform: scale(1.04) translateY(-6px); }
-        }
-        .pricing-card:hover:not(.premium) { transform: translateY(-6px); border-color: rgba(255,255,255,0.2); }
-
-        .popular-tag {
-            position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
-            background: var(--primary); color: #000; font-family: var(--font-title);
-            padding: 4px 16px; border-radius: 50px; font-size: 0.8rem; box-shadow: 0 5px 15px rgba(198,255,0,0.3);
-        }
-
-        .price-head h3 { font-family: var(--font-title); font-size: 1.35rem; margin-bottom: 6px; }
-        .price-head p { color: var(--text-muted); font-size: 0.85rem; min-height: 38px; }
-        .price-amount { font-family: var(--font-title); font-size: 2.4rem; color: var(--primary); margin: 15px 0 20px; display: flex; align-items: baseline; gap: 5px; }
-        .price-amount span { font-size: 0.88rem; color: var(--text-muted); font-family: var(--font-main); }
-        
-        .price-features { flex-grow: 1; margin-bottom: 22px; }
-        .price-features li { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; font-size: 0.88rem; }
-        .price-features li i { color: var(--primary); margin-top: 3px; font-size: 0.85rem; }
-
-        /* ==========================================
-           8. CTA FORM (GLASS PANEL)
-           ========================================== */
-        .cta-wrapper {
-            background: url('data:image/svg+xml;utf8,<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
-            border: 1px solid var(--border-neon); border-radius: 24px;
-            padding: clamp(30px, 5vw, 55px); display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
-            align-items: center; position: relative; overflow: hidden; background-color: rgba(10,10,12,0.9);
-            box-shadow: 0 30px 80px rgba(0,0,0,0.8);
-        }
-        .cta-wrapper::before {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(198,255,0,0.05) 0%, transparent 60%); pointer-events: none;
-        }
-
-        .cta-content h2 { font-family: var(--font-title); font-size: clamp(1.6rem, 3.5vw, 2.3rem); line-height: 1.2; margin-bottom: 15px; }
-        .cta-content p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 22px; line-height: 1.6; }
-
-        .form-glass {
-            background: rgba(255,255,255,0.02); padding: 28px 24px; border-radius: 18px;
-            border: 1px solid var(--border); backdrop-filter: blur(20px);
-        }
-        .input-group { margin-bottom: 16px; position: relative; }
-        .input-group i { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); pointer-events: none; z-index: 2; font-size: 1rem; }
-        .form-control {
-            width: 100%; padding: 13px 50px 13px 20px; background: rgba(0,0,0,0.5);
-            border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: #fff;
-            font-family: var(--font-main); font-size: 0.88rem; transition: all 0.3s;
-        }
-        .form-control:focus { border-color: var(--primary); box-shadow: 0 0 15px rgba(198,255,0,0.1); outline: none; }
-
-        /* Custom Select Dropdown UI */
-        .custom-select-container {
-            position: relative; margin-bottom: 16px; user-select: none;
-        }
-        .custom-select-trigger {
-            width: 100%; padding: 13px 50px 13px 40px; background: rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px;
-            color: var(--text-muted); font-family: var(--font-main); font-size: 0.88rem;
-            display: flex; align-items: center; justify-content: space-between;
-            cursor: pointer; transition: all 0.3s ease; position: relative;
-        }
-        .custom-select-trigger.has-value { color: #fff; border-color: rgba(198, 255, 0, 0.3); }
-        .custom-select-container.open .custom-select-trigger {
-            border-color: var(--primary); box-shadow: 0 0 20px rgba(198, 255, 0, 0.2);
-            border-bottom-left-radius: 4px; border-bottom-right-radius: 4px;
-        }
-        .select-icon { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 1rem; pointer-events: none; z-index: 2; }
-        .arrow-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.85rem; pointer-events: none; z-index: 2; transition: transform 0.3s ease; }
-        .custom-select-container.open .arrow-icon { transform: rotate(180deg); color: var(--primary); }
-
-        .custom-select-options {
-            position: absolute; top: calc(100% + 4px); left: 0; right: 0;
-            background: rgba(12, 12, 15, 0.98); border: 1px solid var(--border-neon);
-            border-radius: 14px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            z-index: 100; display: none; max-height: 240px; overflow-y: auto;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.9);
-            animation: selectSlide 0.25s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
-        }
-        @keyframes selectSlide {
-            from { opacity: 0; transform: translateY(-8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .custom-select-container.open .custom-select-options { display: block; }
-
-        .custom-option {
-            padding: 14px 20px; color: var(--text-muted); font-size: 0.95rem; font-weight: 600;
-            cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 12px;
-        }
-        .custom-option i { color: var(--text-muted); font-size: 1rem; transition: color 0.2s ease; }
-        .custom-option:hover {
-            background: rgba(198, 255, 0, 0.1); color: #fff; padding-right: 25px;
-        }
-        .custom-option:hover i { color: var(--primary); }
-        .custom-option.selected {
-            background: rgba(198, 255, 0, 0.15); color: var(--primary); font-weight: 700;
-        }
-        .custom-option.selected i { color: var(--primary); }
-
-
-
-        /* ==========================================
-           8.2 LIVE STATS COUNTER
-           ========================================== */
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
-        .stat-box-card {
-            background: var(--bg-surface); border: 1px solid var(--border);
-            border-radius: 20px; padding: 28px 20px; text-align: center;
-            backdrop-filter: var(--glass-blur); transition: var(--transition-bounce);
-        }
-        .stat-box-card:hover { border-color: var(--primary); transform: translateY(-5px); }
-        .counter-num { font-family: var(--font-title); font-size: 2.5rem; color: var(--primary); line-height: 1; margin-bottom: 8px; }
-        .counter-label { color: var(--text-muted); font-size: 0.95rem; font-weight: 600; }
-
-        /* ==========================================
-           8.3 FAQ ACCORDION
-           ========================================== */
-        .faq-wrapper { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
-        .faq-item {
-            background: var(--bg-surface); border: 1px solid var(--border);
-            border-radius: 14px; overflow: hidden; backdrop-filter: var(--glass-blur);
-            transition: all 0.3s ease;
-        }
-        .faq-item:hover { border-color: rgba(255, 255, 255, 0.2); }
-        .faq-item.active { border-color: var(--border-neon); background: rgba(198, 255, 0, 0.03); box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
-        
-        .faq-question {
-            padding: 18px 22px; font-family: var(--font-main); font-size: 0.98rem; font-weight: 700;
-            display: flex; justify-content: space-between; align-items: center; gap: 15px;
-            cursor: pointer; color: #fff; transition: color 0.3s; line-height: 1.5;
-        }
-        .faq-question-title { display: flex; align-items: flex-start; gap: 12px; flex: 1; }
-        .faq-question-title i { color: var(--primary); font-size: 1rem; margin-top: 3px; flex-shrink: 0; }
-        .faq-question:hover { color: var(--primary); }
-        
-        .faq-icon {
-            width: 28px; height: 28px; border-radius: 50%; background: rgba(255, 255, 255, 0.05);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 0.8rem; color: var(--primary); flex-shrink: 0;
-            transition: all 0.3s ease; border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .faq-item.active .faq-icon { transform: rotate(180deg); background: var(--primary); color: #000; border-color: var(--primary); }
-        
-        .faq-answer {
-            max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0, 1, 0, 1);
-            padding: 0 22px 0 54px; color: var(--text-muted); font-size: 0.9rem; line-height: 1.7;
-        }
-        .faq-item.active .faq-answer { max-height: 300px; padding: 0 22px 20px 54px; transition: max-height 0.35s cubic-bezier(1, 0, 1, 0); }
-
-        @media (max-width: 768px) {
-            .faq-question { padding: 15px 16px; font-size: 0.9rem; }
-            .faq-answer { padding: 0 16px 0 16px; font-size: 0.85rem; }
-            .faq-item.active .faq-answer { padding: 0 16px 16px 16px; }
-            .faq-icon { width: 24px; height: 24px; font-size: 0.75rem; }
-        }
-
-        /* ==========================================
-           9. FOOTER
-           ========================================== */
-        footer { border-top: 1px solid var(--border); padding: 50px 0 25px; background: #030303; margin-top: 80px; }
-        .footer-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 30px; margin-bottom: 40px; }
-        .social-links { display: flex; gap: 15px; }
-        .social-links a {
-            width: 45px; height: 45px; border-radius: 50%; background: var(--bg-surface); border: 1px solid var(--border);
-            display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: var(--transition-bounce);
-        }
-        .social-links a:hover { background: var(--primary); color: #000; transform: translateY(-5px); border-color: var(--primary); }
-        .footer-bottom { text-align: center; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid var(--border); padding-top: 25px; }
-
-        /* Floating WhatsApp Button */
-        .whatsapp-float {
-            position: fixed; bottom: 30px; left: 30px;
-            width: 60px; height: 60px; background-color: #25D366; color: #fff;
-            border-radius: 50px; text-align: center; font-size: 32px;
-            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4); z-index: 1000;
-            display: flex; align-items: center; justify-content: center;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            animation: pulse-wa 2s infinite; text-decoration: none;
-        }
-        .whatsapp-float:hover {
-            transform: scale(1.1) rotate(10deg); color: #fff;
-            box-shadow: 0 15px 35px rgba(37, 211, 102, 0.6);
-        }
-        @keyframes pulse-wa {
-            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
-            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
-        }
-
-        /* Toast */
-        .toast {
-            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
-            background: #fff; color: #000; padding: 16px 30px; border-radius: 12px;
-            font-weight: 700; display: flex; align-items: center; gap: 12px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4); opacity: 0; transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); z-index: 2000;
-        }
-        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-        .toast i { color: #10b981; font-size: 1.5rem; }
-
-        /* ==========================================
-           10. RESPONSIVE QUERIES
-           ========================================== */
-        @media (max-width: 992px) {
-            .hero-grid, .cta-wrapper { grid-template-columns: 1fr; gap: 40px; }
-            .hero-visual { width: 100%; margin: 0 auto; }
-            .hero-text { text-align: center; }
-            .hero-text p { margin: 0 auto 30px; max-width: 100%; }
-            .hero-btns { justify-content: center; }
-            .cta-content { text-align: center; }
-        }
-
-        @media (max-width: 768px) {
-            html, body {
-                overflow-x: hidden !important;
-                width: 100% !important;
-            }
-            .container {
-                width: 92% !important;
-                padding: 0 5px !important;
-            }
-            
-            /* Fix animation overflow on mobile */
-            .reveal-left, .reveal-right {
-                transform: translateY(30px) !important;
-            }
-            .reveal-left.active, .reveal-right.active {
-                transform: translateY(0) !important;
-            }
-
-            /* Header & Mobile Drawer */
-            .mobile-toggle { display: block; }
-            .nav-container > .btn-primary { display: none; }
-            .nav-links {
-                position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-                background: rgba(5,5,5,0.98); backdrop-filter: blur(20px);
-                flex-direction: column; justify-content: center; gap: 25px;
-                clip-path: circle(0% at top right); transition: all 0.5s ease-in-out;
-            }
-            .nav-links.active { clip-path: circle(150% at top right); }
-            .nav-links a { font-size: 1.3rem; }
-            .nav-links .mobile-cta { display: inline-flex; margin-top: 15px; }
-
-            /* Hero Section Mobile Adjustments */
-            .hero { padding: 95px 0 45px !important; }
-            .hero-text h1 { font-size: clamp(1.6rem, 6vw, 2.2rem) !important; line-height: 1.25; margin-bottom: 15px !important; }
-            .hero-text p { font-size: 0.88rem !important; line-height: 1.6 !important; }
-            .hero-btns { flex-direction: column; width: 100%; gap: 10px; }
-            .hero-btns .btn { width: 100%; padding: 12px 20px !important; font-size: 0.9rem !important; }
-
-            /* Floating Card Mobile Adjustments */
-            .floating-card {
-                transform: none !important;
-                animation: none !important;
-                padding: 20px 16px !important;
-                border-radius: 16px !important;
-            }
-            .float-badge {
-                font-size: 0.75rem !important;
-                padding: 5px 12px !important;
-            }
-            .float-1 { top: -12px !important; right: 8px !important; }
-            .float-2 { bottom: -12px !important; left: 8px !important; }
-
-            .stat-row { gap: 12px; margin-bottom: 14px !important; padding-bottom: 14px !important; }
-            .stat-icon { width: 40px !important; height: 40px !important; font-size: 1.1rem !important; }
-            .stat-info h3 { font-size: 1.18rem !important; }
-            .stat-info p { font-size: 0.8rem !important; }
-
-            /* Pricing & Cards Mobile Adjustments */
-            .glass-card, .pricing-card { padding: 20px 16px !important; border-radius: 16px !important; }
-            .glass-card h3, .price-head h3 { font-size: 1.18rem !important; }
-            .glass-card p, .price-head p { font-size: 0.85rem !important; }
-            
-            .pricing-nav { flex-direction: column; width: 100%; gap: 8px; }
-            .pricing-tab-btn { width: 100%; justify-content: center; padding: 10px 16px !important; font-size: 0.82rem !important; }
-            .pricing-banner-card { padding: 20px 16px !important; border-radius: 16px !important; }
-            .price-amount { font-size: 2.1rem !important; margin: 12px 0 16px !important; }
-            .cta-wrapper { padding: 22px 16px !important; border-radius: 18px !important; }
-            .cta-content h2 { font-size: 1.4rem !important; }
-            .form-glass { padding: 18px 14px !important; border-radius: 14px !important; }
-            .footer-content { flex-direction: column; text-align: center; justify-content: center; gap: 18px; }
-
-            /* WhatsApp Float Button Mobile Size */
-            .whatsapp-float { width: 52px; height: 52px; font-size: 28px; bottom: 20px; left: 20px; }
-            .ambient-glow { width: 300px !important; height: 300px !important; }
-        }
-        @media (min-width: 769px) { .nav-links .mobile-cta { display: none; } }
-    </style>
+    <meta name="theme-color" content="#090b09">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
 </head>
-<body>
-
-    <!-- Ambient Background -->
-    <div class="ambient-glow glow-1"></div>
-    <div class="ambient-glow glow-2"></div>
-    <!-- Cursor Glow -->
-    <div class="cursor-glow" id="cursorGlow"></div>
-
-    <!-- HEADER -->
-    <header id="header">
-        <div class="container nav-container">
-            <a href="#" class="logo">
-                <div class="logo-icon">S</div>
-                SQUAD <span class="text-neon">MEDIA</span>
-            </a>
-            
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#services" class="nav-item">الخدمات</a></li>
-                <li><a href="#pricing" class="nav-item">الباقات والحلول</a></li>
-                <li><a href="#faq" class="nav-item">الأسئلة الشائعة</a></li>
-                <li><a href="#contact" class="nav-item">تواصل معنا</a></li>
-                <a href="#contact" class="btn btn-primary mobile-cta nav-item">
-                    <i class="fa-solid fa-paper-plane"></i> احصل على استشارة
-                </a>
-            </ul>
-
-            <a href="#contact" class="btn btn-primary">
-                <i class="fa-solid fa-bolt"></i> ابدأ الآن
-            </a>
-            
-            <div class="mobile-toggle" id="mobileToggle">
-                <i class="fa-solid fa-bars-staggered"></i>
-            </div>
-        </div>
-    </header>
-
-    <!-- HERO SECTION -->
-    <section class="hero">
-        <div class="container hero-grid">
-            <div class="hero-text reveal-right">
-                <div class="badge"><i class="fa-solid fa-fire"></i> وكالة التسويق الأسرع نمواً</div>
-                <h1>تسويق ذكي<br><span class="text-animated">نتائج سريعة</span><br>مبيعات حقيقية</h1>
-                <p>نحن لا نصنع مجرد تصاميم جذابة! نحن نبني لك أنظمة تسويقية وإعلانات مدفوعة موجهة مباشرة لمضاعفة الأرباح (ROI) لشركتك في السوق المصري.</p>
-                <div class="hero-btns">
-                    <a href="#contact" class="btn btn-primary">
-                        <i class="fa-solid fa-rocket"></i> ابدأ النمو الآن
-                    </a>
-                    <a href="#pricing" class="btn btn-outline">
-                        عرض الباقات <i class="fa-solid fa-arrow-left"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="hero-visual reveal-left delay-1">
-                <div class="float-badge float-1"><i class="fa-brands fa-meta" style="color:#0668E1;"></i> Meta Partner</div>
-                <div class="float-badge float-2"><i class="fa-solid fa-chart-line" style="color:var(--primary);"></i> +147% ROI</div>
-                
-                <div class="floating-card">
-                    <div class="stat-row">
-                        <div class="stat-icon"><i class="fa-solid fa-bullseye"></i></div>
-                        <div class="stat-info">
-                            <h3>حملات بيعية</h3>
-                            <p>إعلانات تهدف للمبيعات والعملاء المحتملين مباشرة.</p>
-                        </div>
-                    </div>
-                    <div class="stat-row">
-                        <div class="stat-icon"><i class="fa-solid fa-bolt"></i></div>
-                        <div class="stat-info">
-                            <h3>سرعة التنفيذ</h3>
-                            <p>إطلاق حملتك وتصاميمك في أقل من 72 ساعة.</p>
-                        </div>
-                    </div>
-                    <div class="stat-row" style="border:none; margin:0; padding:0;">
-                        <div class="stat-icon"><i class="fa-solid fa-chart-pie"></i></div>
-                        <div class="stat-info">
-                            <h3>تقارير شفافة</h3>
-                            <p>متابعة أسبوعية ودعم يومي لتحسين الأداء.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- INFINITE MARQUEE -->
-    <div class="marquee-wrapper reveal">
-        <div class="marquee">
-            <!-- Duplicate content for infinite loop effect -->
-            <span><i class="fa-solid fa-star"></i> إدارة سوشيال ميديا</span>
-            <span><i class="fa-solid fa-star"></i> إعلانات ميتا وتيك توك</span>
-            <span><i class="fa-solid fa-star"></i> تصاميم إبداعية</span>
-            <span><i class="fa-solid fa-star"></i> كتابة محتوى بيعي</span>
-            <span><i class="fa-solid fa-star"></i> تحليل البيانات</span>
-            <span><i class="fa-solid fa-star"></i> زيادة المبيعات</span>
-            <span><i class="fa-solid fa-star"></i> إدارة سوشيال ميديا</span>
-            <span><i class="fa-solid fa-star"></i> إعلانات ميتا وتيك توك</span>
-            <span><i class="fa-solid fa-star"></i> تصاميم إبداعية</span>
-            <span><i class="fa-solid fa-star"></i> كتابة محتوى بيعي</span>
-            <span><i class="fa-solid fa-star"></i> تحليل البيانات</span>
-            <span><i class="fa-solid fa-star"></i> زيادة المبيعات</span>
-        </div>
+<body id="top">
+<a class="skip-link" href="#main">انتقل إلى المحتوى</a>
+<header class="site-header" id="header">
+  <div class="container nav-container">
+    <a class="brand" href="#top" aria-label="SQUAD MEDIA — الرئيسية" dir="ltr"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-name">SQUAD<small>MEDIA</small></span></a>
+    <nav class="nav-links" id="navLinks" aria-label="التنقل الرئيسي">
+      <a href="#services">خدماتنا</a><a href="#process">طريقة عملنا</a><a href="#pricing">الباقات والحلول</a><a href="#faq">الأسئلة الشائعة</a>
+      <a href="#contact" class="btn btn-primary mobile-cta">خلّينا نتكلم <span class="arrow" aria-hidden="true">↖</span></a>
+    </nav>
+    <a href="#contact" class="btn btn-primary header-cta">خلّينا نتكلم <span class="arrow" aria-hidden="true">↖</span></a>
+    <button class="mobile-toggle" id="mobileToggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="فتح القائمة"><span aria-hidden="true">☰</span></button>
+  </div>
+  <div class="menu-backdrop" id="menuBackdrop" hidden></div>
+</header>
+<main id="main">
+<section class="hero" aria-labelledby="hero-title">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <div class="hero-topline"><span class="status-dot" aria-hidden="true"></span> فريقك للنمو. من أول فكرة لآخر نتيجة.</div>
+        <h1 id="hero-title"><span class="headline-line">تسويق ذكي.</span><span class="headline-line"><span class="accent-word">نمو</span> يستحق</span><span class="headline-line">المشاهدة.</span></h1>
+        <p>نجمع الاستراتيجية، الإبداع، والإعلانات في فريق واحد. نبني حضورًا يلفت الانتباه وحملات تحوّل الاهتمام إلى مبيعات في السوق المصري.</p>
+        <div class="hero-btns"><a href="#contact" class="btn btn-primary">ابدأ نمو مشروعك <span class="arrow" aria-hidden="true">↖</span></a><a href="#pricing" class="btn btn-outline">اكتشف الباقات <span aria-hidden="true">←</span></a></div>
+        <div class="hero-note"><i class="fa-regular fa-circle-check" aria-hidden="true"></i> أول خطوة؟ استشارة مجانية، بدون أي التزام.</div>
+      </div>
+      <div class="growth-art" aria-hidden="true">
+        <div class="art-toolbar"><span><b>✳</b> THE GROWTH STUDIO</span><span>SQUAD / EG</span></div>
+        <div class="art-wordmark">MAKE<br><span>IT GROW.</span></div>
+        <svg viewBox="0 0 600 520" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="growth-grid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0V48" fill="none" stroke="#2a3321" stroke-width=".8"/></pattern>
+            <radialGradient id="growth-glow"><stop stop-color="#c6ff00" stop-opacity=".13"/><stop offset="1" stop-color="#c6ff00" stop-opacity="0"/></radialGradient>
+            <linearGradient id="arrow-face" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#88b300"/><stop offset=".55" stop-color="#c6ff00"/><stop offset="1" stop-color="#e2ff7c"/></linearGradient>
+          </defs>
+          <circle cx="300" cy="260" r="250" fill="url(#growth-glow)"/>
+          <circle cx="300" cy="260" r="213" fill="url(#growth-grid)" stroke="#36422a"/>
+          <g class="art-orbit"><circle cx="300" cy="260" r="244" fill="none" stroke="#69784c" stroke-dasharray="2 12"/><circle cx="117" cy="99" r="6" fill="#c6ff00"/><circle cx="507" cy="389" r="4" fill="#e5ebdc"/></g>
+          <ellipse cx="300" cy="260" rx="109" ry="213" transform="rotate(34 300 260)" fill="none" stroke="#4d5a3b"/>
+          <path d="M60 260H540M300 25V495" stroke="#38432b" stroke-dasharray="4 8"/>
+          <g opacity=".35" stroke="#c6ff00" fill="none"><path d="M160 350L242 266L300 310L405 182" stroke-width="2"/><path d="M160 376L242 292L300 336L405 208" stroke-width="2"/></g>
+          <g class="art-arrow">
+            <path d="M115 367L235 239L298 286L371 189L335 163L480 123L478 274L441 245L311 412L248 363L169 450Z" fill="#566e10" transform="translate(0 16)"/>
+            <path d="M115 367L235 239L298 286L371 189L335 163L480 123L478 274L441 245L311 412L248 363L169 450Z" fill="url(#arrow-face)" stroke="#d8ff5a" stroke-width="1.5"/>
+            <path d="M130 369L236 256L300 303L393 184" fill="none" stroke="#f1ffb4" stroke-width="2" opacity=".5"/>
+          </g>
+          <g fill="#b1bd9f" font-family="monospace" font-size="10" letter-spacing="2"><text x="92" y="80">IDEA → IMPACT</text><text x="377" y="469">BUILT TO GROW</text></g>
+          <g stroke="#c6ff00" stroke-width="1.5"><path d="M510 98h20m-10-10v20"/><path d="M82 405h16m-8-8v16"/></g>
+        </svg>
+        <div class="art-tag tag-strategy"><i class="fa-solid fa-crosshairs"></i><span>فكرة واضحة.<br><strong>تأثير يستمر.</strong></span></div>
+        <div class="art-tag tag-creative"><span class="art-spark">✳</span><span>إبداع × أداء</span></div>
+        <div class="art-caption"><span>STRATEGY → CREATE → GROW</span><span>↗</span></div>
+      </div>
     </div>
-
-    <!-- SERVICES -->
-    <section class="py-100" id="services">
-        <div class="container">
-            <div class="section-header reveal">
-                <div class="badge">الخدمات القاتلة</div>
-                <h2 class="section-title">حلول متكاملة <span class="text-neon">للهيمنة</span> على السوق</h2>
-                <p class="section-subtitle">كل ما تحتاجه للسيطرة على السوشيال ميديا وجلب عملاء جدد يومياً.</p>
-            </div>
-            
-            <div class="grid-3">
-                <div class="glass-card reveal delay-1">
-                    <div class="icon-box"><i class="fa-solid fa-rectangle-ad"></i></div>
-                    <h3>الإعلانات المدفوعة (Ads)</h3>
-                    <p>استراتيجيات Media Buying متقدمة على فيسبوك، إنستجرام، وتيك توك للوصول للعميل الجاهز للشراء.</p>
-                    <ul class="list-items">
-                        <li><i class="fa-solid fa-check"></i> استهداف دقيق وتقليل التكلفة</li>
-                        <li><i class="fa-solid fa-check"></i> كتابة نصوص بياعة (Copywriting)</li>
-                    </ul>
-                </div>
-                <div class="glass-card reveal delay-2">
-                    <div class="icon-box"><i class="fa-solid fa-hashtag"></i></div>
-                    <h3>إدارة السوشيال ميديا</h3>
-                    <p>إدارة احترافية لحساباتك، بناء محتوى تفاعلي، وجدولة النشر لتعزيز ثقة العملاء بعلامتك التجارية.</p>
-                    <ul class="list-items">
-                        <li><i class="fa-solid fa-check"></i> خطة محتوى شهرية مبتكرة</li>
-                        <li><i class="fa-solid fa-check"></i> تصميم هوية بصرية قوية للبراند</li>
-                    </ul>
-                </div>
-                <div class="glass-card reveal delay-3">
-                    <div class="icon-box"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
-                    <h3>التصميم والإنتاج</h3>
-                    <p>تصاميم عصرية ومونتاج فيديوهات قصير (Reels/TikTok) تخطف العين في الثواني الأولى.</p>
-                    <ul class="list-items">
-                        <li><i class="fa-solid fa-check"></i> تصاميم بوستات جذابة وسريعة</li>
-                        <li><i class="fa-solid fa-check"></i> مونتاج ديناميكي للإعلانات</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- PRICING -->
-    <section class="py-100" id="pricing" style="background: rgba(255,255,255,0.01);">
-        <div class="container">
-            <div class="section-header reveal">
-                <div class="badge"><i class="fa-solid fa-sliders"></i> SQUAD MEDIA PRICING ENGINE</div>
-                <h2 class="section-title">استثمر في <span class="text-neon">نمو مشروعك</span> بالنموذج المناسب</h2>
-                <p class="section-subtitle">اختر بين تجربة الخدمة السريعة، التعاقد الشهري المنتظم، أو الشراكة المبنية على النسبة والمبيعات.</p>
-            </div>
-
-            <!-- Pricing Navigation Tabs -->
-            <div class="pricing-nav reveal">
-                <button class="pricing-tab-btn" data-tab="test-sprint">
-                    <i class="fa-solid fa-flask"></i> 🧪 باقة التجربة (Test Sprint)
-                </button>
-                <button class="pricing-tab-btn active" data-tab="core-retainers">
-                    <i class="fa-solid fa-rocket"></i> 🚀 باقات النمو (Core Retainers)
-                </button>
-                <button class="pricing-tab-btn" data-tab="rev-share">
-                    <i class="fa-solid fa-chart-line"></i> 📈 النسبة والتوسع (Scale & Rev-Share)
-                </button>
-            </div>
-
-            <!-- TAB 1: Test Sprint -->
-            <div class="tab-panel" id="test-sprint">
-                <div class="pricing-banner-card reveal">
-                    <div>
-                        <div class="badge" style="margin-bottom:15px;"><i class="fa-solid fa-bolt"></i> اختبار سريع بدون التزام طويل</div>
-                        <h3 style="font-family: var(--font-title); font-size: 2.2rem; margin-bottom: 15px;">باقة التجربة (Test Sprint)</h3>
-                        <p style="color: var(--text-muted); font-size: 1rem; line-height: 1.7; margin-bottom: 25px;">
-                            صُممت لتجربة أداء فريقنا وسرعة نتائجنا لتقييم التصاميم والإعلانات بدون التعاقد الشهري.
-                        </p>
-                        <div class="price-amount" style="margin: 15px 0 25px;">
-                            1,500 <span>ج.م (مرة واحدة)</span>
-                        </div>
-                        <a href="#contact" class="btn btn-primary" style="width: 100%;">
-                            <i class="fa-solid fa-bolt"></i> احجز باقة التجربة الآن
-                        </a>
-                    </div>
-                    <div>
-                        <ul class="price-features" style="margin-bottom:0;">
-                            <li><i class="fa-solid fa-check"></i> <strong>4 تصاميم إعلانية</strong> موجهة للمبيعات والتفاعل</li>
-                            <li><i class="fa-solid fa-check"></i> <strong>إعداد وإطلاق 1 حملة إعلانية</strong> ممولة مدفوعة</li>
-                            <li><i class="fa-solid fa-check"></i> <strong>كتابة محتوى بيعي (Copywriting)</strong></li>
-                            <li><i class="fa-solid fa-check"></i> <strong>شاملة ميزانية الإعلان والتصميم</strong></li>
-                            <li><i class="fa-solid fa-check"></i> <strong>تقرير فني متكامل</strong> لتقييم النتائج وتوصيات النمو</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB 2: Core Retainers (Default Active) -->
-            <div class="tab-panel active" id="core-retainers">
-                <div class="grid-3">
-                    <!-- Pack Bāsiq -->
-                    <div class="pricing-card reveal delay-1">
-                        <div class="price-head">
-                            <h3>Bāsiq (الانطلاق)</h3>
-                            <p>مثالية للمحلات والمشاريع الناشئة لبناء تواجد واستمرارية.</p>
-                        </div>
-                        <div class="price-amount">4,500 <span>ج.م / شهر</span></div>
-                        <ul class="price-features">
-                            <li><i class="fa-solid fa-check"></i> 12 تصميم بوست وستوري احترافي</li>
-                            <li><i class="fa-solid fa-check"></i> إدارة حساب واحد (FB أو IG)</li>
-                            <li><i class="fa-solid fa-check"></i> إعداد ومتابعة 2 حملة إعلانية بيعية</li>
-                            <li><i class="fa-solid fa-check"></i> تقرير شهري وتوصيات الأداء</li>
-                        </ul>
-                        <a href="#contact" class="btn btn-outline">اختر Bāsiq</a>
-                    </div>
-
-                    <!-- Pack Growth -->
-                    <div class="pricing-card premium reveal delay-2">
-                        <div class="popular-tag">الأكثر طلباً ⚡</div>
-                        <div class="price-head">
-                            <h3>Growth (النمو المسرّع)</h3>
-                            <p>للمتاجر والعيادات الراغبة في مضاعفة المبيعات شهرياً.</p>
-                        </div>
-                        <div class="price-amount">7,500 <span>ج.م / شهر</span></div>
-                        <ul class="price-features">
-                            <li><i class="fa-solid fa-check"></i> 16 تصميم + ستوريز تفاعلية يومية</li>
-                            <li><i class="fa-solid fa-check"></i> 2 فيديو مونتاج ريلز (Reels/TikTok)</li>
-                            <li><i class="fa-solid fa-check"></i> إدارة منصتين (FB & IG)</li>
-                            <li><i class="fa-solid fa-check"></i> إدارة كاملة للحملات الإعلانية المدفوعة</li>
-                            <li><i class="fa-solid fa-check"></i> كتابة محتوى إعلاني بيعي متقدم</li>
-                            <li><i class="fa-solid fa-check"></i> تقرير أسبوعي وشبكة دعم مباشرة</li>
-                        </ul>
-                        <a href="#contact" class="btn btn-primary">ابدأ باقة Growth</a>
-                    </div>
-
-                    <!-- Pack Pro -->
-                    <div class="pricing-card reveal delay-3">
-                        <div class="price-head">
-                            <h3>Pro (الأرباح الشاملة)</h3>
-                            <p>للشركات القائمة والمتاجر الكبيرة للهيمنة والتوسع.</p>
-                        </div>
-                        <div class="price-amount">12,000 <span>ج.م / شهر</span></div>
-                        <ul class="price-features">
-                            <li><i class="fa-solid fa-check"></i> 24 تصميم + ميديا متقدمة</li>
-                            <li><i class="fa-solid fa-check"></i> 4 فيديوهات ريلز ومونتاج احترافي</li>
-                            <li><i class="fa-solid fa-check"></i> إدارة شاملة (FB, IG, TikTok)</li>
-                            <li><i class="fa-solid fa-check"></i> أتمتة الردود والرسائل (Chatbot Automation)</li>
-                            <li><i class="fa-solid fa-check"></i> استراتيجية Media Buying متكاملة وتوزيع ميزانيات</li>
-                            <li><i class="fa-solid fa-check"></i> تحليل منافسين وتقارير يومية ودعم فوري</li>
-                        </ul>
-                        <a href="#contact" class="btn btn-outline">اختر باقة Pro</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB 3: Scale & Rev-Share -->
-            <div class="tab-panel" id="rev-share">
-                <div class="pricing-grid-2 reveal">
-                    <!-- Option 1: Ad Spend Commission -->
-                    <div class="pricing-card premium">
-                        <div class="price-head">
-                            <div class="badge" style="margin-bottom:10px;"><i class="fa-solid fa-chart-pie"></i> إعلانات موجهة (Media Buying)</div>
-                            <h3>نسبة إدارة الإعلانات</h3>
-                            <p>مخصصة للمتاجر والشركات ذات الميزانيات الإعلانية الكبيرة.</p>
-                        </div>
-                        <div class="price-amount">20% <span>من ميزانية الإعلانات</span></div>
-                        <p style="color:var(--primary); font-weight:700; font-size:0.9rem; margin-top:-20px; margin-bottom:25px;">(بحد أدنى 2,500 ج.م)</p>
-                        <ul class="price-features">
-                            <li><i class="fa-solid fa-check"></i> إدارة وإحصاء كامل للحملات الإعلانية المدفوعة</li>
-                            <li><i class="fa-solid fa-check"></i> A/B Testing مستمر للإعلانات والتصاميم والجمهور</li>
-                            <li><i class="fa-solid fa-check"></i> تحسين تكلفة الاستحواذ على العميل (CPA & ROAS)</li>
-                            <li><i class="fa-solid fa-check"></i> شفافية كاملة وتقارير لحظية للميزانيات والأداء</li>
-                        </ul>
-                        <a href="#contact" class="btn btn-primary">طلب إدارة الإعلانات بنسبة</a>
-                    </div>
-
-                    <!-- Option 2: Retainer + Rev Share -->
-                    <div class="pricing-card">
-                        <div class="price-head">
-                            <div class="badge" style="margin-bottom:10px;"><i class="fa-solid fa-handshake"></i> شراكة النمو الحقيقي</div>
-                            <h3>نسبة من المبيعات (Rev-Share)</h3>
-                            <p>نموذج الشراكة المبني على الأداء للمتاجر والبراندات القابلة للتوسع السريع.</p>
-                        </div>
-                        <div class="price-amount" style="font-size:2rem; margin:25px 0 10px;">
-                            0 ج.م أتعاب <span>+ % من المبيعات</span>
-                        </div>
-                        <p style="color:var(--primary); font-weight:700; font-size:0.9rem; margin-bottom:20px;">(تحاسب على ميزانية الإعلانات فقط — ولا نأخذ أتعاباً إلا عندما تبيع!)</p>
-                        <ul class="price-features">
-                            <li><i class="fa-solid fa-check"></i> <strong>بدون أتعاب إدارة:</strong> تدفع ميزانية الإعلانات فقط ونحصل على نسبتنا عند تحقيق المبيعات</li>
-                            <li><i class="fa-solid fa-check"></i> بناء Funnel تسويقي وإعلاني متكامل لمنتجاتك</li>
-                            <li><i class="fa-solid fa-check"></i> إنتاج تصاميم وفيديوهات إعلانية غير محدودة</li>
-                            <li><i class="fa-solid fa-check"></i> تحسين معدل تحويل المتجر/الصفحة (CRO Optimization)</li>
-                            <li><i class="fa-solid fa-check"></i> اجتماعات استراتيجية أسبوعية مع فريق النمو الرئيسي</li>
-                        </ul>
-                        <a href="#contact" class="btn btn-outline">ناقش نموذج الشراكة معنا</a>
-                    </div>
-                </div>
-            </div>
-
-    </section>
-
-    <!-- LIVE STATS & PROOF -->
-    <!-- <section class="py-100" id="stats" style="border-t: 1px solid var(--border);">
-        <div class="container">
-            <div class="stats-grid reveal">
-                <div class="stat-box-card">
-                    <div class="counter-num">+3.4M</div>
-                    <div class="counter-label">مبيعات محققة للعملاء (ج.م)</div>
-                </div>
-                <div class="stat-box-card">
-                    <div class="counter-num">140+</div>
-                    <div class="counter-label">حملة إعلانية ناجحة</div>
-                </div>
-                <div class="stat-box-card">
-                    <div class="counter-num">4.5x</div>
-                    <div class="counter-label">متوسط عائد الاستثمار (ROAS)</div>
-                </div>
-                <div class="stat-box-card">
-                    <div class="counter-num">98%</div>
-                    <div class="counter-label">نسبة تجديد اشتراك العملاء</div>
-                </div>
-            </div>
-        </div>
-    </section> -->
-
-    <!-- FAQ ACCORDION -->
-    <section class="py-100" id="faq" style="background: rgba(255,255,255,0.01);">
-        <div class="container">
-            <div class="section-header reveal">
-                <div class="badge"><i class="fa-solid fa-circle-question"></i> الأسئلة الشائعة</div>
-                <h2 class="section-title">كل ما تحتاج <span class="text-neon">معرفته</span> قبل البدء</h2>
-                <p class="section-subtitle">إجابات شفافة عن أكثر الأسئلة تكراراً حول طريقة عملنا ونتائجنا.</p>
-            </div>
-
-            <div class="faq-wrapper reveal">
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <div class="faq-question-title">
-                            <i class="fa-solid fa-bolt"></i>
-                            <span>كم يستغرق وقت تجهيز وإطلاق الحملة؟</span>
-                        </div>
-                        <div class="faq-icon"><i class="fa-solid fa-chevron-down"></i></div>
-                    </div>
-                    <div class="faq-answer">
-                        ينطلق فريق العمل فوراً بعد استلام البيانات، ويتم تجهيز التصاميم والنصوص الإعلانية وإعداد الحملة وإطلاقها في أقل من 72 ساعة.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <div class="faq-question-title">
-                            <i class="fa-solid fa-chart-line"></i>
-                            <span>هل أحصل على تقارير تفصيلية لأداء الإعلانات؟</span>
-                        </div>
-                        <div class="faq-icon"><i class="fa-solid fa-chevron-down"></i></div>
-                    </div>
-                    <div class="faq-answer">
-                        نعم بكل تأكيد! نوفر تقارير أسبوعية وشهرية شفافة توضح الميزانيات المنفقة، عدد العملاء الجدد، ومعدل عائد الاستثمار (ROAS).
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <div class="faq-question-title">
-                            <i class="fa-solid fa-crown"></i>
-                            <span>ما الذي يميز SQUAD MEDIA عن الشركات الأخرى؟</span>
-                        </div>
-                        <div class="faq-icon"><i class="fa-solid fa-chevron-down"></i></div>
-                    </div>
-                    <div class="faq-answer">
-                        نحن لا نكتفي بعمل تصاميم، بل نبني Funnel تسويقي وإعلاني متكامل موجه للمبيعات فوراً مع متابعة مستمرة وتعديلات لحظية للأداء.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <div class="faq-question-title">
-                            <i class="fa-solid fa-vial"></i>
-                            <span>هل يمكنني تجربة خدماتكم قبل التعاقد الطويل؟</span>
-                        </div>
-                        <div class="faq-icon"><i class="fa-solid fa-chevron-down"></i></div>
-                    </div>
-                    <div class="faq-answer">
-                        نعم! يمكنك الاستفادة من "باقة التجربة (Test Sprint)" لاختبار جودة التصاميم وسرعة أداء الإعلانات بدون أي التزام طويل الأجل.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <div class="faq-question-title">
-                            <i class="fa-solid fa-comments"></i>
-                            <span>كيف يتم التواصل ومتابعة العمل بعد الاشتراك؟</span>
-                        </div>
-                        <div class="faq-icon"><i class="fa-solid fa-chevron-down"></i></div>
-                    </div>
-                    <div class="faq-answer">
-                        نخصص لك مدير حسابات ومجموعة واتساب مباشرة مع الفريق الفني لمتابعة التحديثات والاستفسارات على مدار الساعة.
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- HOW WE WORK -->
-    <section class="py-100" id="process" style="border-top: 1px solid var(--border);">
-        <div class="container">
-            <div class="section-header reveal">
-                <div class="badge"><i class="fa-solid fa-diagram-project"></i> خطوات بسيطة، نتائج مذهلة</div>
-                <h2 class="section-title">كيف <span class="text-neon">نعمل</span> معك؟</h2>
-                <p class="section-subtitle">من أول اتصال حتى مضاعفة مبيعاتك — عملية واضحة وشفافة بالكامل.</p>
-            </div>
-
-            <div class="process-steps reveal">
+    <div class="hero-bottom"><span>كل ما يحتاجه مشروعك.<br>مع فريق واحد.</span><div class="capabilities"><span><i class="fa-solid fa-bullseye" aria-hidden="true"></i> استراتيجية واضحة</span><span><i class="fa-solid fa-bolt" aria-hidden="true"></i> تنفيذ سريع</span><span><i class="fa-solid fa-chart-line" aria-hidden="true"></i> متابعة مستمرة</span></div><a class="scroll-cue" href="#services" aria-label="اكتشف خدماتنا">↓</a></div>
+  </div>
+</section>
+<div class="service-ribbon" aria-label="استراتيجية، إعلانات، محتوى، تصميم، تحليل، نمو">
+  <div class="ribbon-track" aria-hidden="true">
+    <div class="ribbon-group"><span>أفكار تلفت</span><b>✳</b><span>محتوى يقرّب</span><b>✳</b><span>إعلانات تحوّل</span><b>✳</b><span>تصميم يفرق</span><b>✳</b><span>نمو يستمر</span><b>✳</b></div>
+    <div class="ribbon-group"><span>أفكار تلفت</span><b>✳</b><span>محتوى يقرّب</span><b>✳</b><span>إعلانات تحوّل</span><b>✳</b><span>تصميم يفرق</span><b>✳</b><span>نمو يستمر</span><b>✳</b></div>
+  </div>
+</div>
+<section class="section" id="services" aria-labelledby="services-title">
+  <div class="container">
+    <div class="section-header section-heading-row"><div><div class="eyebrow"><span dir="ltr">01 / WHAT WE BRING TO THE TABLE</span></div><h2 class="section-title" id="services-title">إبداع يجذب.<br><span class="text-neon">تسويق يحرّك.</span></h2><p class="section-subtitle">من أول انطباع لقرار الشراء. حلول متكاملة تشتغل معًا، علشان مشروعك يتحرك لقدّام.</p></div><span class="section-number" dir="ltr">STRATEGY + CREATIVE + PERFORMANCE ↗</span></div>
+    <div class="services-grid">
+      <article class="service-card featured"><div class="service-card-top"><span class="service-index" dir="ltr">01 / PERFORMANCE</span><span class="service-icon"><i class="fa-solid fa-arrow-trend-up" aria-hidden="true"></i></span></div><div class="service-visual visual-performance" aria-hidden="true"><svg viewBox="0 0 320 150"><g fill="none" stroke="currentColor"><ellipse cx="160" cy="75" rx="115" ry="55" opacity=".25"/><ellipse cx="160" cy="75" rx="73" ry="55" opacity=".25"/><path d="M36 75h248M160 20v110" opacity=".25"/><path d="m57 114 60-47 42 25 80-62" stroke-width="3"/><path d="m215 31 25-2-4 24" stroke-width="3"/></g><circle cx="117" cy="67" r="6" fill="currentColor"/><circle cx="159" cy="92" r="6" fill="currentColor"/></svg><span>فكّر. اختبر. طوّر.</span></div><h3>إعلانات توصل.<br>وتحوّل.</h3><p>استراتيجيات Media Buying على فيسبوك، إنستجرام، وتيك توك. نوصل للعميل المناسب برسالة تدفعه للخطوة الجاية.</p><ul class="list-items"><li><i class="fa-solid fa-check" aria-hidden="true"></i> استهداف دقيق وتحسين تكلفة الاستحواذ</li><li><i class="fa-solid fa-check" aria-hidden="true"></i> كتابة نصوص إعلانية موجهة للمبيعات</li></ul><span class="service-label" dir="ltr">PAID ADS & MEDIA BUYING ↗</span></article>
+      <article class="service-card"><div class="service-card-top"><span class="service-index" dir="ltr">02 / CONNECTION</span><span class="service-icon"><i class="fa-solid fa-hashtag" aria-hidden="true"></i></span></div><div class="service-visual visual-social" aria-hidden="true"><div class="social-tile tile-back">↗</div><div class="social-tile tile-front">#<span>MAKE A CONNECTION</span></div><span class="social-bubble">♥</span></div><h3>حضور له<br>شخصية.</h3><p>إدارة سوشيال ميديا تبني علاقة بين البراند والناس. محتوى تفاعلي، نشر منتظم، وهوية يفتكروها.</p><ul class="list-items"><li><i class="fa-solid fa-check" aria-hidden="true"></i> خطة محتوى شهرية مبتكرة</li><li><i class="fa-solid fa-check" aria-hidden="true"></i> هوية بصرية متناسقة للبراند</li></ul><span class="service-label" dir="ltr">SOCIAL MEDIA MANAGEMENT ↗</span></article>
+      <article class="service-card"><div class="service-card-top"><span class="service-index" dir="ltr">03 / ATTENTION</span><span class="service-icon"><i class="fa-solid fa-bezier-curve" aria-hidden="true"></i></span></div><div class="service-visual visual-design" aria-hidden="true"><div class="design-frame"><span>أفكار<br><b>برا الكادر.</b></span><i></i><i></i><i></i><i></i></div><span class="design-cursor">↖</span></div><h3>تصميم يوقف<br>التمرير.</h3><p>تصاميم ومونتاج فيديوهات قصيرة تخطف الانتباه من أول ثانية، وتحكي فكرتك بأسلوب يناسب جمهورك.</p><ul class="list-items"><li><i class="fa-solid fa-check" aria-hidden="true"></i> تصاميم بوستات وستوريز إبداعية</li><li><i class="fa-solid fa-check" aria-hidden="true"></i> مونتاج ديناميكي لـ Reels وTikTok</li></ul><span class="service-label" dir="ltr">DESIGN & VIDEO PRODUCTION ↗</span></article>
+    </div>
+  </div>
+</section>
+<section class="section team-section" id="process" aria-labelledby="team-title">
+  <div class="container team-grid">
+    <div class="team-copy"><div class="eyebrow"><span dir="ltr">02 / YOUR NEXT GROWTH TEAM</span></div><h2 class="section-title" id="team-title">مش مجرد وكالة.<br><span class="text-neon">امتداد لفريقك.</span></h2><p>فريق واحد يجمع التفكير والتصميم والمحتوى والإعلانات. نفهم مشروعك، نبني له خطة، ونشتغل معك خطوة بخطوة.</p><div class="process-steps">
                 <div class="process-step">
                     <div class="step-num">01</div>
                     <div class="step-title">استشارة مجانية</div>
@@ -1128,27 +125,112 @@
                 <div class="process-step">
                     <div class="step-num">03</div>
                     <div class="step-title">التصميم والإطلاق</div>
-                    <div class="step-desc">نجهّز الإعلانات والتصاميم ونطلق حملتك في أقل من 72 ساعة.</div>
+                    <div class="step-desc">نجهّز المحتوى والحملات بعد استلام الخامات والصلاحيات والموافقات اللازمة.</div>
                 </div>
                 <div class="process-step">
                     <div class="step-num">04</div>
                     <div class="step-title">تحسين وتوسع</div>
                     <div class="step-desc">نتابع الأداء يومياً ونضاعف ما ينجح ونلغي ما لا يُربح.</div>
                 </div>
-            </div>
-        </div>
+            </div></div>
+    <figure class="team-image"><img src="img/team.png" alt="فريق SQUAD MEDIA: استراتيجية ونمو، إدارة وتخطيط، تصميم ومحتوى، وإعلانات وأداء" width="1149" height="1369" loading="lazy" decoding="async"><figcaption><span>فريق واحد. هدف واحد.</span><span dir="ltr">MEET YOUR SQUAD ↗</span></figcaption></figure>
+  </div>
+</section>
+<section class="section pricing-section" id="pricing" aria-labelledby="pricing-title">
+  <div class="container">
+    <div class="section-header pricing-header">
+      <div class="eyebrow"><span dir="ltr">03 / INVEST IN YOUR NEXT CHAPTER</span></div>
+      <h2 class="section-title" id="pricing-title">طموحك كبير.<br>وله <span class="text-neon">الباقة المناسبة.</span></h2>
+      <p class="section-subtitle">اختر حضورًا منتظمًا، أو محتوى وإعلانات معًا. عندك محتوى جاهز؟ نقدر ندير إعلاناتك فقط.</p>
+    </div>
+    <div class="pricing-budget-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i><p><strong>هذه أتعاب الخدمة؛ ميزانية الإعلان منفصلة.</strong><br>تُدفع ميزانية الإعلان إلى المنصات من حسابك. نطاق الخدمة وأي ضرائب أو تكاليف إضافية تُوضّح في عرضك المكتوب.</p></div>
+    <div class="pricing-nav">
+      <button type="button" id="tab-core-retainers" class="pricing-tab-btn active" data-tab="core-retainers">الباقات الشهرية</button>
+      <button type="button" id="tab-test-sprint" class="pricing-tab-btn" data-tab="test-sprint">تجربة 14 يومًا</button>
+      <button type="button" id="tab-rev-share" class="pricing-tab-btn" data-tab="rev-share">إعلانات وشراكات</button>
+    </div>
+    <div class="tab-panel active" id="core-retainers">
+      <div class="grid-3"><article class="pricing-card" data-plan="presence">
+      
+      <div class="price-head"><h3>حضور</h3><p>حضور منتظم لمشروعك، بمحتوى له شخصية.</p></div>
+      <div class="price-amount">4,500<span>ج.م أتعاب / شهر</span></div>
+      <p class="plan-limit">إدارة الإعلانات غير مشمولة</p>
+      <ul class="price-features"><li><i class="fa-solid fa-check" aria-hidden="true"></i>12 تصميم منشور أصلي شهريًا</li><li><i class="fa-solid fa-check" aria-hidden="true"></i>8 ستوري مشتقة من محتوى الشهر</li><li><i class="fa-solid fa-check" aria-hidden="true"></i>نشر على Facebook وInstagram لنفس البراند</li><li><i class="fa-solid fa-check" aria-hidden="true"></i>خطة محتوى وكتابة وجدولة النشر</li><li><i class="fa-solid fa-check" aria-hidden="true"></i>تقرير أداء شهري وتوصيات</li></ul>
+      <a href="#contact" class="btn btn-outline" data-offer="presence">اختر باقة حضور</a>
+    </article>
+<article class="pricing-card premium" data-plan="growth">
+      <div class="popular-tag">نرشّحها للنمو ↗</div>
+      <div class="price-head"><h3>نمو</h3><p>محتوى وإعلانات Meta في خطة واحدة.</p></div>
+      <div class="price-amount">8,500<span>ج.م أتعاب / شهر</span></div>
+      <p class="plan-limit">تشمل إدارة Meta لإنفاق حتى 20,000 ج.م / شهر</p>
+      <ul class="price-features"><li><i class="fa-solid fa-check" aria-hidden="true"></i>12 تصميم منشور أصلي + 12 ستوري مشتقة</li><li><i class="fa-solid fa-check" aria-hidden="true"></i>2 ريلز مونتاج من خاماتك، حتى 45 ثانية للفيديو</li><li><i class="fa-solid fa-check" aria-hidden="true"></i>نشر على Facebook وInstagram لنفس البراند</li><li><i class="fa-solid fa-check" aria-hidden="true"></i>خطة محتوى وكتابة وجدولة النشر</li><li><i class="fa-solid fa-check" aria-hidden="true"></i>إدارة حساب Meta إعلاني واحد، حتى حملتين نشطتين معًا</li><li><i class="fa-solid fa-check" aria-hidden="true"></i>تقرير شهري وملخص أسبوعي للحملات</li></ul>
+      <a href="#contact" class="btn btn-primary" data-offer="growth">ابدأ باقة نمو</a>
+    </article>
+<article class="pricing-card" data-plan="scale">
+      
+      <div class="price-head"><h3>توسّع</h3><p>إنتاج أكثر ومتابعة أوسع للخطوة التالية.</p></div>
+      <div class="price-amount">13,500<span>ج.م أتعاب / شهر</span></div>
+      <p class="plan-limit">تشمل إدارة Meta لإنفاق حتى 40,000 ج.م / شهر</p>
+      <ul class="price-features"><li><i class="fa-solid fa-check" aria-hidden="true"></i>16 تصميم منشور أصلي + 16 ستوري مشتقة</li><li><i class="fa-solid fa-check" aria-hidden="true"></i>4 ريلز مونتاج من خاماتك، حتى 45 ثانية للفيديو</li><li><i class="fa-solid fa-check" aria-hidden="true"></i>نشر على Facebook وInstagram وTikTok لنفس البراند</li><li><i class="fa-solid fa-check" aria-hidden="true"></i>خطة محتوى وكتابة وجدولة النشر</li><li><i class="fa-solid fa-check" aria-hidden="true"></i>إدارة حساب Meta إعلاني واحد، حتى 4 حملات نشطة معًا</li><li><i class="fa-solid fa-check" aria-hidden="true"></i>تقرير أسبوعي واجتماع متابعة شهري</li></ul>
+      <a href="#contact" class="btn btn-outline" data-offer="scale">اختر باقة توسّع</a>
+    </article></div>
+      <div class="pricing-excess"><h3>إنفاقك أعلى من سقف الباقة؟</h3><p>لباقتي نمو وتوسّع: تُضاف <strong>10% من الإنفاق الفعلي الزائد عن السقف فقط</strong>، بعد اعتماد سقف الإنفاق معك. لا تُضاف أتعاب إدارة مستقلة مرة ثانية.</p><p class="pricing-example">مثال: نمو مع إنفاق 30,000 ج.م، تكون الأتعاب <bdi dir="ltr">8,500 + 1,000 = <strong>9,500</strong></bdi> ج.م، بجانب ميزانية الإعلان.</p></div>
+    </div>
+    <div class="tab-panel" id="test-sprint">
+      <div class="pricing-banner-card">
+        <div><div class="badge"><i class="fa-solid fa-bolt" aria-hidden="true"></i> بداية محددة بدون اشتراك شهري</div><h3>تجربة الحملة</h3><p>جرّب طريقة عملنا في إعداد حملة Meta ومتابعتها لمدة 14 يومًا بعد الإطلاق، بمخرجات واضحة من البداية.</p><div class="price-amount">2,500<span>ج.م أتعاب / مرة واحدة</span></div><p class="pricing-condition">ميزانية الإعلان منفصلة، ونتفق عليها حسب نشاطك وهدف الحملة.</p><a href="#contact" class="btn btn-primary" data-offer="trial">ابدأ تجربة الحملة <span aria-hidden="true">←</span></a></div>
+        <div><ul class="price-features"><li><i class="fa-solid fa-check" aria-hidden="true"></i>4 تصاميم إعلانية ونصوصها</li><li><i class="fa-solid fa-check" aria-hidden="true"></i>إعداد حملة واحدة على Meta</li><li><i class="fa-solid fa-check" aria-hidden="true"></i>متابعة لمدة 14 يومًا بعد إطلاق الحملة</li><li><i class="fa-solid fa-check" aria-hidden="true"></i>تقرير مختصر بالنتائج والتوصيات</li></ul><p class="pricing-scope-note">لا تشمل التصوير أو الريلز. التجربة لتقييم العمل والبيانات، دون ضمان عدد مبيعات.</p></div>
+      </div>
+    </div>
+    <div class="tab-panel" id="rev-share">
+      <div class="pricing-grid-2">
+        <article class="pricing-card premium" data-plan="ads">
+          <div class="price-head"><div class="badge">MEDIA BUYING</div><h3>إدارة إعلانات فقط</h3><p>لديك محتوى جاهز وتحتاج فريقًا يدير أداءه على Meta.</p></div>
+          <div class="price-amount">3,000<span>ج.م حد أدنى للأتعاب / شهر</span></div><p class="pricing-condition">أو 15% من الإنفاق الفعلي على Meta، أيهما أعلى.</p>
+          <ul class="price-features"><li><i class="fa-solid fa-check" aria-hidden="true"></i>حساب Meta إعلاني واحد وحتى 4 حملات نشطة معًا</li><li><i class="fa-solid fa-check" aria-hidden="true"></i>إعداد إداري واستهداف ومتابعة وتحسين للحملات</li><li><i class="fa-solid fa-check" aria-hidden="true"></i>كتابة نصوص الإعلانات باستخدام مواد جاهزة تملك حقوقها</li><li><i class="fa-solid fa-check" aria-hidden="true"></i>تقرير بالإنفاق ونتائج الحملات</li></ul>
+          <p class="pricing-scope-note">إنتاج التصميم والفيديو وتصحيح الموقع والتكاملات المتقدمة بعرض منفصل.</p>
+          <p class="pricing-example">إنفاق 30,000 ج.م ← <strong>4,500 ج.م أتعاب إدارة</strong>، والإنفاق منفصل.</p>
+          <a href="#contact" class="btn btn-primary" data-offer="ads">اطلب إدارة إعلاناتك</a>
+        </article>
+        <article class="pricing-card" data-plan="partnership">
+          <div class="price-head"><div class="badge">GROWTH PARTNERSHIP</div><h3>شراكة أداء</h3><p>للمشروعات المؤهلة بعد مراجعة النشاط والهوامش والبيانات.</p></div>
+          <div class="price-amount custom-quote">حسب الدراسة<span>عرض مخصص لنشاطك</span></div><p class="pricing-condition">أتعاب أساسية + حافز أداء متفق عليه.</p>
+          <ul class="price-features"><li><i class="fa-solid fa-check" aria-hidden="true"></i>دراسة هامش المنتج والجاهزية قبل الاتفاق</li><li><i class="fa-solid fa-check" aria-hidden="true"></i>حافز مرتبط بمبيعات محصلة ومنسوبة للحملات</li><li><i class="fa-solid fa-check" aria-hidden="true"></i>اتفاق واضح على مصدر البيانات وطريقة الإسناد</li><li><i class="fa-solid fa-check" aria-hidden="true"></i>استبعاد الإلغاءات والمرتجعات والطلبات غير المحصلة</li></ul>
+          <p class="pricing-scope-note">نحدد الأتعاب ونسبة الحافز ونطاق الإنتاج في العرض قبل بدء العمل. ميزانية الإعلان منفصلة.</p>
+          <a href="#contact" class="btn btn-outline" data-offer="partnership">ناقش شراكة الأداء معنا</a>
+        </article>
+      </div>
+    </div>
+    <p class="pricing-custom-note">إنفاق يتجاوز 100,000 ج.م شهريًا، أو منصات إعلانية وحسابات إضافية؟ <a href="#contact">نجهّز لك عرضًا مخصصًا ←</a></p>
+    <section class="fee-calculator" aria-labelledby="calculator-title" hidden>
+      <div class="calculator-intro"><span class="badge" dir="ltr">LET’S DO THE MATH ↗</span><h3 id="calculator-title">احسبها على ميزانيتك.</h3><p>شوف أتعاب الخدمة الشهرية حسب إنفاقك على Meta.</p></div>
+      <form id="feeCalculator" class="calculator-fields">
+        <div class="input-group"><label for="calculatorPlan">الخدمة</label><select class="form-control" id="calculatorPlan"><option value="growth">باقة نمو</option><option value="scale">باقة توسّع</option><option value="ads">إدارة إعلانات فقط</option></select></div>
+        <div class="input-group"><label for="calculatorSpend">إنفاق الإعلان شهريًا (ج.م)</label><input class="form-control" id="calculatorSpend" type="number" inputmode="numeric" min="0" step="any" value="20000" required aria-describedby="calculator-note"></div>
+        <div class="calculator-result" aria-live="polite" aria-atomic="true"><span>أتعاب الخدمة / شهر</span><output id="calculatorFee" for="calculatorPlan calculatorSpend">8,500 <small>ج.م</small></output><p id="calculatorBreakdown">تشمل إدارة الإنفاق ضمن سقف الباقة.</p></div>
+        <p id="calculator-note" class="calculator-note">الإنفاق الإعلاني منفصل. هذا تقدير للأتعاب؛ الضرائب والخدمات الإضافية تُوضّح في العرض المكتوب.</p>
+      </form>
     </section>
-
-    <!-- TESTIMONIALS -->
-    <section class="py-100" id="testimonials" style="background: rgba(255,255,255,0.01);">
+    <details class="pricing-terms">
+      <summary>تفاصيل الخدمة وحدود الباقات <span aria-hidden="true">＋</span></summary>
+      <div class="pricing-terms-grid">
+        <div><h3>المحتوى والمراجعات</h3><p>الأعداد إجمالية للبراند عبر الحسابات، وليست لكل منصة. الستوري مشتقة من محتوى الشهر. الريلز مونتاج وترجمة بسيطة من خاماتك، حتى 45 ثانية للفيديو. تشمل الخدمة جولتي تعديلات مجمعتين لكل دفعة؛ تغيير الفكرة المعتمدة أو نطاق العمل يُسعّر إضافيًا.</p></div>
+        <div><h3>الإنتاج والخدمات الإضافية</h3><p>التصوير والممثلون وUGC والموشن المتقدم والتراخيص المدفوعة خارج الباقات. تصميمات الحملات من العدد المتفق عليه. الرد على الرسائل وتلقي الطلبات والشات بوت وCRM والمواقع واشتراكات الأدوات خدمات منفصلة.</p></div>
+        <div><h3>الحسابات والأتعاب</h3><p>حسابات الإعلان ووسيلة الدفع مملوكة لك. إدارة الإعلانات في نمو وتوسّع تخص Meta فقط؛ نشر المحتوى على TikTok لا يشمل إدارة إعلاناته. تُحسب رسوم الزيادة على الإنفاق الزائد المعتمد فقط، دون تكرار أتعاب الإدارة.</p></div>
+        <div><h3>التنفيذ والمتابعة</h3><p>نبدأ بعد استلام الخامات والصلاحيات والموافقات اللازمة، ونتفق على الجدول وأوقات المتابعة عند بدء التعاون. نلتزم بالمخرجات والإدارة والتحسين والتقارير، ولا نضمن عدد مبيعات أو مضاعفة أرباح. تُوضّح الضرائب وأي تكاليف طرف ثالث في عرضك المكتوب.</p></div>
+      </div>
+    </details>
+  </div>
+</section>
+<section class="section testimonials-section" id="testimonials" aria-labelledby="testimonials-title">
         <div class="container">
-            <div class="section-header reveal">
-                <div class="badge"><i class="fa-solid fa-heart"></i> عملاؤنا يتكلمون</div>
-                <h2 class="section-title">نتائج <span class="text-neon">حقيقية</span> من عملاء حقيقيين</h2>
+            <div class="section-header">
+                <div class="eyebrow"><span dir="ltr">04 / GOOD WORDS. REAL PEOPLE.</span></div>
+                <h2 class="section-title" id="testimonials-title">الفرق يحكيه <span class="text-neon">أصحابه.</span></h2>
                 <p class="section-subtitle">مش كلامنا، كلام اللي شافوا الفرق بنفسهم.</p>
             </div>
 
-            <div class="testimonials-grid reveal">
+            <div class="testimonials-grid">
                 <div class="testimonial-card">
                     <div class="testimonial-stars">★★★★★</div>
                     <p class="testimonial-text">قبل SQUAD كنت بصرف على إعلانات بدون نتيجة. دلوقتي المتجر بيجيب طلبات يومية بشكل منتظم والمبيعات زادت 3 مرات في أول شهرين.</p>
@@ -1161,7 +243,7 @@
                     </div>
                 </div>
 
-                <div class="testimonial-card" style="border-color: var(--border-neon);">
+                <div class="testimonial-card">
                     <div class="testimonial-stars">★★★★★</div>
                     <p class="testimonial-text">فريق محترف وسريع جداً. الحملات الإعلانية طلعت بتصاميم على مستوى عالي ومتابعة دايمة. العيادة اتملت بمواعيد في الشهر الأول!</p>
                     <div class="testimonial-author">
@@ -1187,317 +269,54 @@
             </div>
         </div>
     </section>
-
-    <!-- CTA FORM -->
-    <section class="py-100" id="contact">
-        <div class="container">
-            <div class="cta-wrapper reveal">
-                <div class="cta-content">
-                    <div class="badge"><i class="fa-solid fa-paper-plane"></i> تواصل معنا</div>
-                    <h2>جاهز لمضاعفة مبيعاتك؟</h2>
-                    <p>سجل بياناتك وسيقوم فريقنا بالتواصل معك فوراً لمناقشة خطة النمو المناسبة لنشاطك التجاري وبدء التنفيذ.</p>
-                    <div style="display:flex; align-items:center; gap:15px; font-weight:700;">
-                        <div class="icon-box" style="width:50px; height:50px; margin:0;"><i class="fa-solid fa-shield-halved"></i></div>
-                        <span>بياناتك آمنة، استشارة خالية من أي التزام.</span>
-                    </div>
-                </div>
-
-                <div class="form-glass">
-                    <form id="leadForm">
-                        <div class="input-group">
-                            <i class="fa-regular fa-user"></i>
-                            <input type="text" id="leadName" class="form-control" placeholder="الاسم الكريم" required>
-                        </div>
-                        <div class="input-group">
-                            <i class="fa-solid fa-store"></i>
-                            <input type="text" id="leadBrand" class="form-control" placeholder="اسم البراند / النشاط التجاري" required>
-                        </div>
-                        <div class="input-group">
-                            <i class="fa-solid fa-link"></i>
-                            <input type="text" id="leadLink" class="form-control" placeholder="رابط الصفحة أو المتجر (اختياري)">
-                        </div>
-                        
-                        <!-- Custom Select 1: Business Type -->
-                        <div class="custom-select-container" id="leadTypeContainer">
-                            <div class="custom-select-trigger">
-                                <i class="fa-solid fa-briefcase select-icon"></i>
-                                <span class="selected-text">مجال العمل / نوع النشاط</span>
-                                <i class="fa-solid fa-chevron-down arrow-icon"></i>
-                            </div>
-                            <div class="custom-select-options">
-                                <div class="custom-option" data-value="ecom"><i class="fa-solid fa-cart-shopping"></i> متجر إلكتروني</div>
-                                <div class="custom-option" data-value="clinic"><i class="fa-solid fa-user-doctor"></i> عيادة / مركز طبي</div>
-                                <div class="custom-option" data-value="local"><i class="fa-solid fa-store"></i> محل تجاري / فرع</div>
-                                <div class="custom-option" data-value="service"><i class="fa-solid fa-building-user"></i> شركة / خدمات</div>
-                                <div class="custom-option" data-value="creator"><i class="fa-solid fa-video"></i> صناعة محتوى / كورسات</div>
-                            </div>
-                            <input type="hidden" id="leadType" required>
-                        </div>
-
-                        <!-- Custom Select 2: Ad Budget -->
-                        <div class="custom-select-container" id="leadBudgetContainer">
-                            <div class="custom-select-trigger">
-                                <i class="fa-solid fa-coins select-icon"></i>
-                                <span class="selected-text">الميزانية الشهرية للإعلانات</span>
-                                <i class="fa-solid fa-chevron-down arrow-icon"></i>
-                            </div>
-                            <div class="custom-select-options">
-                                <div class="custom-option" data-value="b1"><i class="fa-solid fa-coins"></i> أقل من 10,000 ج.م</div>
-                                <div class="custom-option" data-value="b2"><i class="fa-solid fa-coins"></i> من 10,000 إلى 30,000 ج.م</div>
-                                <div class="custom-option" data-value="b3"><i class="fa-solid fa-coins"></i> من 30,000 إلى 70,000 ج.م</div>
-                                <div class="custom-option" data-value="b4"><i class="fa-solid fa-coins"></i> أكثر من 70,000 ج.م</div>
-                            </div>
-                            <input type="hidden" id="leadBudget" required>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">
-                            <i class="fa-solid fa-paper-plane"></i> إرسال وفتح الواتساب
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <a href="#" class="logo">
-                    <div class="logo-icon">S</div>
-                    SQUAD <span class="text-neon">MEDIA</span>
-                </a>
-                <p style="color: var(--text-muted); max-width: 400px;">الذراع التنفيذي المباشر لبناء نموك. نقدم حلولاً تسويقية ذكية وسريعة تناسب طموحاتك.</p>
-                <div class="social-links">
-                    <a href="https://www.facebook.com/profile.php?id=61592583453139" target="_blank" rel="noopener noreferrer" title="فيسبوك"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="https://www.instagram.com/squad4media/" target="_blank" rel="noopener noreferrer" title="إنستجرام"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="https://wa.me/201042472017" target="_blank" rel="noopener noreferrer" title="واتساب"><i class="fa-brands fa-whatsapp"></i></a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                جميع الحقوق محفوظة © 2026 لـ <strong>SQUAD MEDIA</strong> — إحدى شركات مجموعة SCOPE Growth Ecosystem.
-            </div>
-        </div>
-    </footer>
-
-    <!-- TOAST ALERT -->
-    <div class="toast" id="toast">
-        <i class="fa-solid fa-circle-check"></i>
-        <span>تم تحويلك إلى الواتساب بنجاح!</span>
+<section class="section faq-section" id="faq" aria-labelledby="faq-title">
+  <div class="container faq-layout">
+    <div class="section-header"><div class="eyebrow"><span dir="ltr">05 / BEFORE WE GET STARTED</span></div><h2 class="section-title" id="faq-title">أسئلة في بالك؟<br><span class="text-neon">خلّينا نجاوب.</span></h2><p class="section-subtitle">كل ما تحتاج تعرفه قبل أول خطوة. بوضوح، ومن غير تعقيد.</p><a class="faq-contact" href="#contact">عندك سؤال تاني؟ تواصل معنا <span aria-hidden="true">←</span></a></div>
+    <div class="faq-wrapper"><details class="faq-item"><summary class="faq-question">هل الأسعار تشمل ميزانية الإعلان؟</summary><div class="faq-answer">الأسعار أتعاب خدمتنا فقط. ميزانية الإعلان منفصلة وتُدفع إلى المنصات من حسابك. حضور لا تشمل إدارة إعلانات؛ نمو وتوسّع تشملان إدارة Meta ضمن السقف الموضح لكل باقة. الضرائب وأي تكاليف إضافية تُوضّح في العرض المكتوب.</div></details>
+<details class="faq-item"><summary class="faq-question">ماذا يحدث لو تجاوز الإنفاق سقف باقتي؟</summary><div class="faq-answer">في نمو وتوسّع، تُضاف 10% من الإنفاق الفعلي الزائد عن السقف فقط، بعد الاتفاق معك على سقف الإنفاق. مثلًا: نمو مع إنفاق 30,000 ج.م تكون أتعابها 9,500 ج.م، بجانب ميزانية الإعلان. لا نضيف أتعاب إدارة مستقلة مرة ثانية. الإنفاق فوق 100,000 ج.م أو تشغيل حسابات أو منصات إعلانية إضافية يحتاج عرضًا مخصصًا.</div></details>
+<details class="faq-item"><summary class="faq-question">هل عدد المنشورات لكل منصة؟ وهل الريلز تشمل تصويرًا؟</summary><div class="faq-answer">الأعداد إجمالية لنفس البراند عبر حساباته، وليست لكل منصة. الستوري مشتقة من محتوى الشهر، والريلز حتى 45 ثانية بمونتاج وترجمة بسيطة من خامات يوفرها العميل. التصوير وUGC والممثلون والموشن المتقدم والتراخيص المدفوعة تُسعّر منفصلة.</div></details>
+<details class="faq-item"><summary class="faq-question">كم جولة تعديلات تشملها الخدمة؟</summary><div class="faq-answer">تشمل الخدمة جولتي تعديلات مجمعتين لكل دفعة ضمن الفكرة المتفق عليها. تغيير الفكرة بعد اعتمادها أو طلب إنتاج إضافي خارج النطاق يُسعّر قبل تنفيذه. تصميمات الإعلانات من العدد المتفق عليه في الباقة.</div></details>
+<details class="faq-item"><summary class="faq-question">هل الرد على العملاء والشات بوت مشمولان؟</summary><div class="faq-answer">الرد على الرسائل وتلقي الطلبات وخدمة العملاء والشات بوت وCRM واشتراكات الأدوات خارج الباقات الأساسية. نحدد لها عرضًا منفصلًا حسب ساعات التغطية وحجم العمل والتكاملات المطلوبة.</div></details>
+<details class="faq-item"><summary class="faq-question">هل يمكنني تجربة الخدمة أولًا؟</summary><div class="faq-answer">نعم، تجربة الحملة بـ2,500 ج.م أتعاب مرة واحدة، تشمل 4 تصاميم ونصوصها وحملة Meta واحدة ومتابعة 14 يومًا بعد الإطلاق وتقريرًا مختصرًا. ميزانية الإعلان منفصلة، ولا تشمل التجربة التصوير أو الريلز أو ضمان عدد مبيعات.</div></details>
+<details class="faq-item"><summary class="faq-question">عندي محتوى جاهز؛ هل أحتاج باقة شهرية؟</summary><div class="faq-answer">يمكنك اختيار إدارة إعلانات فقط: الأعلى بين 3,000 ج.م شهريًا أو 15% من الإنفاق الفعلي على Meta، لحساب واحد وحتى 4 حملات نشطة. نستخدم مواد جاهزة تملك حقوقها، وإنتاج التصميم والفيديو بعرض منفصل. هذه خدمة مستقلة، ولا تُضاف أتعابها كاملة إلى نمو أو توسّع اللتين تشملان الإدارة بالفعل.</div></details>
+<details class="faq-item"><summary class="faq-question">كيف تُسعّر شراكة الأداء؟</summary><div class="faq-answer">نراجع النشاط وهوامش المنتج وجودة بيانات المبيعات أولًا، ثم نتفق على أتعاب أساسية وحافز أداء ونطاق إنتاج محدد. يُربط الحافز بمبيعات محصلة ومنسوبة للحملات مع استبعاد الإلغاءات والمرتجعات والطلبات غير المحصلة. لا توجد نسبة عامة ثابتة لكل الأنشطة.</div></details>
+<details class="faq-item"><summary class="faq-question">متى يبدأ التنفيذ وكيف نتابع العمل؟</summary><div class="faq-answer">نبدأ بعد استلام الخامات والصلاحيات والموافقات اللازمة، ونتفق معك على موعد الإطلاق وأوقات المتابعة. حضور تشمل تقريرًا شهريًا؛ نمو تقريرًا شهريًا وملخصًا أسبوعيًا للحملات؛ توسّع تقريرًا أسبوعيًا واجتماعًا شهريًا. النتائج تعتمد على النشاط والعرض والسوق، ولا نضمن عدد مبيعات أو مضاعفة أرباح.</div></details></div>
+  </div>
+</section>
+<section class="section contact-section" id="contact" aria-labelledby="contact-title">
+  <div class="container">
+    <div class="cta-wrapper">
+      <div class="cta-content"><div class="eyebrow"><span dir="ltr">06 / LET’S MAKE YOUR NEXT MOVE</span></div><h2 id="contact-title">الخطوة الجاية<br>في نموك؟<br>نبدأها سوا.</h2><p>احكِ لنا عن مشروعك وطموحك. نناقش معك خطة النمو المناسبة، ونختار نقطة البداية.</p><div class="contact-seal"><i class="fa-regular fa-comments" aria-hidden="true"></i><span>استشارة مجانية. بداية بدون التزام.</span></div></div>
+      <div class="form-glass">
+        <h3 class="form-title">خلّينا نتعرف على مشروعك</h3>
+        <form id="leadForm" action="https://api.whatsapp.com/send" method="get" target="_blank" rel="noopener noreferrer" aria-describedby="form-note">
+          <input type="hidden" name="phone" value="201042472017">
+          <noscript><p class="form-note">لتجهيز رسالة ببياناتك، فعّل JavaScript. يمكنك أيضًا <a class="whatsapp-fallback" href="https://wa.me/201042472017" target="_blank" rel="noopener noreferrer">التواصل معنا مباشرة على واتساب</a>.</p></noscript>
+          <div class="form-fields">
+            <div class="input-group"><label for="leadName">اسمك الكريم</label><input class="form-control" id="leadName" type="text" placeholder="نحب نعرفك" autocomplete="name" required maxlength="120"></div>
+            <div class="input-group"><label for="leadBrand">اسم البراند / النشاط</label><input class="form-control" id="leadBrand" type="text" placeholder="اسم مشروعك" autocomplete="organization" required maxlength="180"></div>
+            <div class="input-group full-width"><label for="leadLink">رابط الصفحة أو المتجر <span>(اختياري)</span></label><input class="form-control" id="leadLink" type="text" inputmode="url" dir="auto" placeholder="instagram.com/yourbrand" maxlength="2000"></div>
+            <div class="input-group full-width"><label for="leadType">مجال العمل / نوع النشاط</label><select id="leadType" class="form-control" required><option value="" disabled selected>اختر نوع نشاطك</option><option value="ecom">متجر إلكتروني</option><option value="clinic">عيادة / مركز طبي</option><option value="local">محل تجاري / فرع</option><option value="service">شركة / خدمات</option><option value="creator">صناعة محتوى / كورسات</option></select></div>
+            <div class="input-group full-width"><label for="leadService">الخدمة التي تهمك</label><select id="leadService" class="form-control"><option value="consultation" selected>ساعدوني أختار الخدمة المناسبة</option><option value="presence">حضور — 4,500 ج.م / شهر</option><option value="growth">نمو — 8,500 ج.م / شهر</option><option value="scale">توسّع — 13,500 ج.م / شهر</option><option value="trial" label="تجربة الحملة — 2,500 ج.م">تجربة الحملة — 2,500 ج.م مرة واحدة</option><option value="ads" label="إعلانات فقط — 3,000 ج أو 15%">إدارة إعلانات فقط — الأعلى بين 3,000 ج.م أو 15%</option><option value="partnership">شراكة أداء — بعد دراسة</option></select></div>
+            <div class="input-group full-width"><label for="leadBudget">ميزانية الإعلان للمنصات <span>(منفصلة عن أتعابنا)</span></label><select id="leadBudget" class="form-control" required><option value="" disabled selected>اختر ميزانية الإنفاق الشهرية</option><option value="b1">أقل من 10,000 ج.م</option><option value="b2">من 10,000 إلى 20,000 ج.م</option><option value="b3">أكثر من 20,000 وحتى 40,000 ج.م</option><option value="b4">أكثر من 40,000 وحتى 100,000 ج.م</option><option value="b5">أكثر من 100,000 ج.م — عرض مخصص</option><option value="undecided">لم أحدد ميزانية بعد</option></select></div>
+          </div>
+          <p class="form-note" id="form-note">نجهّز بياناتك في رسالة واتساب لتراجعها وترسلها بنفسك. لا تُرسل البيانات بمجرد ملء النموذج.</p>
+          <button class="btn btn-primary" type="submit">متابعة إلى واتساب <i class="fa-brands fa-whatsapp" aria-hidden="true"></i></button>
+          <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+          <a class="whatsapp-fallback" id="whatsappFallback" href="https://wa.me/201042472017" target="_blank" rel="noopener noreferrer" hidden>فتح الرسالة في واتساب ←</a>
+        </form>
+      </div>
     </div>
-
-    <!-- FLOATING WHATSAPP BUTTON -->
-    <a href="https://wa.me/201042472017" class="whatsapp-float" target="_blank" rel="noopener noreferrer" title="تحدث معنا على الواتساب">
-        <i class="fa-brands fa-whatsapp"></i>
-    </a>
-
-    <!-- JAVASCRIPT -->
-    <script>
-        // 1. Header Blur on Scroll
-        const header = document.getElementById('header');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
-
-        // 2. Mobile Menu Toggle
-        const mobileToggle = document.getElementById('mobileToggle');
-        const navLinks = document.getElementById('navLinks');
-        const toggleIcon = mobileToggle.querySelector('i');
-        const navItems = document.querySelectorAll('.nav-item');
-
-        const closeMenu = () => {
-            navLinks.classList.remove('active');
-            toggleIcon.classList.replace('fa-xmark', 'fa-bars-staggered');
-        };
-
-        mobileToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            if (navLinks.classList.contains('active')) {
-                toggleIcon.classList.replace('fa-bars-staggered', 'fa-xmark');
-            } else {
-                toggleIcon.classList.replace('fa-xmark', 'fa-bars-staggered');
-            }
-        });
-
-        navItems.forEach(item => item.addEventListener('click', closeMenu));
-
-        // 3. Scroll Reveal Animation (Intersection Observer)
-        const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
-        const revealOptions = {
-            threshold: 0.15,
-            rootMargin: "0px 0px -50px 0px"
-        };
-
-        const revealOnScroll = new IntersectionObserver(function(entries, observer) {
-            entries.forEach(entry => {
-                if (!entry.isIntersecting) return;
-                entry.target.classList.add('active');
-                observer.unobserve(entry.target); // Play animation once
-            });
-        }, revealOptions);
-
-        revealElements.forEach(el => revealOnScroll.observe(el));
-
-        // 4. Custom Select Component Dropdown Logic
-        const customSelects = document.querySelectorAll('.custom-select-container');
-
-        customSelects.forEach(select => {
-            const trigger = select.querySelector('.custom-select-trigger');
-            const options = select.querySelectorAll('.custom-option');
-            const hiddenInput = select.querySelector('input[type="hidden"]');
-            const selectedText = select.querySelector('.selected-text');
-
-            trigger.addEventListener('click', (e) => {
-                e.stopPropagation();
-                customSelects.forEach(other => {
-                    if (other !== select) other.classList.remove('open');
-                });
-                select.classList.toggle('open');
-            });
-
-            options.forEach(option => {
-                option.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    options.forEach(o => o.classList.remove('selected'));
-                    option.classList.add('selected');
-                    
-                    const val = option.getAttribute('data-value');
-                    const text = option.textContent.trim();
-
-                    hiddenInput.value = val;
-                    hiddenInput.setAttribute('data-text', text);
-                    selectedText.textContent = text;
-                    trigger.classList.add('has-value');
-
-                    select.classList.remove('open');
-                });
-            });
-        });
-
-        document.addEventListener('click', () => {
-            customSelects.forEach(select => select.classList.remove('open'));
-        });
-
-        // 5. Form Submit Redirect to WhatsApp
-        const leadForm = document.getElementById('leadForm');
-        const toast = document.getElementById('toast');
-
-        if (leadForm && toast) {
-            leadForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-
-                const name = document.getElementById('leadName')?.value.trim() || '';
-                const brand = document.getElementById('leadBrand')?.value.trim() || '';
-                const link = document.getElementById('leadLink')?.value.trim() || 'غير محدد';
-                
-                const typeContainer = document.getElementById('leadTypeContainer');
-                const typeText = typeContainer?.querySelector('.custom-option.selected')?.textContent?.trim() 
-                              || document.getElementById('leadType')?.getAttribute('data-text') 
-                              || 'غير محدد';
-
-                const budgetContainer = document.getElementById('leadBudgetContainer');
-                const budgetText = budgetContainer?.querySelector('.custom-option.selected')?.textContent?.trim() 
-                                || document.getElementById('leadBudget')?.getAttribute('data-text') 
-                                || 'غير محدد';
-
-                // Construct creative formatted message
-                const lines = [
-                    "🚀 *طلب استشارة وتطوير نمو | SQUAD MEDIA*",
-                    "",
-                    "مرحباً فريق سكواد! 👋 مهتم بالتعاون معكم لنقل نشاطي التجاري للمستوى التالي 🔥",
-                    "",
-                    "📋 *بيانات الطلب:*",
-                    `👤 *الاسم:* ${name}`,
-                    `🏢 *البراند / النشاط:* ${brand}`,
-                    `🌐 *رابط المتجر / الصفحة:* ${link}`,
-                    `🎯 *نوع النشاط:* ${typeText}`,
-                    `💰 *الميزانية الإعلانية:* ${budgetText}`,
-                    "",
-                    "أنتظر تواصلكم لبدء خطة النمو 📈✨"
-                ];
-
-                const waMessage = lines.join("\n");
-                // Using official api.whatsapp.com URL directly prevents wa.me redirect from stripping line breaks (%0A) and corrupting emojis
-                const waUrl = `https://api.whatsapp.com/send?phone=201042472017&text=${encodeURIComponent(waMessage)}`;
-
-                toast.classList.add('show');
-
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                    window.open(waUrl, '_blank');
-                    leadForm.reset();
-                    
-                    // Reset custom selects UI
-                    customSelects.forEach(s => {
-                        const trigger = s.querySelector('.custom-select-trigger');
-                        const text = s.querySelector('.selected-text');
-                        const defaultPlaceholder = s.id === 'leadTypeContainer' ? 'مجال العمل / نوع النشاط' : 'الميزانية الشهرية للإعلانات';
-                        if (trigger) trigger.classList.remove('has-value');
-                        if (text) text.textContent = defaultPlaceholder;
-                    });
-                }, 800);
-            });
-        }
-
-        // 5. Pricing Engine Tabs Switcher
-        const pricingTabBtns = document.querySelectorAll('.pricing-tab-btn');
-        const tabPanels = document.querySelectorAll('.tab-panel');
-
-        pricingTabBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const targetTab = btn.getAttribute('data-tab');
-
-                pricingTabBtns.forEach(b => b.classList.remove('active'));
-                tabPanels.forEach(panel => panel.classList.remove('active'));
-
-                btn.classList.add('active');
-                const activePanel = document.getElementById(targetTab);
-                if (activePanel) {
-                    activePanel.classList.add('active');
-                }
-            });
-        });
-
-        // 6. FAQ Accordion Logic
-        const faqItems = document.querySelectorAll('.faq-item');
-        faqItems.forEach(item => {
-            const question = item.querySelector('.faq-question');
-            question.addEventListener('click', () => {
-                const isOpen = item.classList.contains('active');
-                faqItems.forEach(other => other.classList.remove('active'));
-                if (!isOpen) {
-                    item.classList.add('active');
-                }
-            });
-        });
-
-        // 8. Cursor Glow Spotlight Effect
-        const cursorGlow = document.getElementById('cursorGlow');
-        if (cursorGlow && window.innerWidth > 768) {
-            document.addEventListener('mousemove', (e) => {
-                cursorGlow.style.left = e.clientX + 'px';
-                cursorGlow.style.top = e.clientY + 'px';
-            });
-        } else if (cursorGlow) {
-            cursorGlow.style.display = 'none';
-        }
-
-        // 9. Animated card border glow on hover
-        document.querySelectorAll('.glass-card, .testimonial-card, .stat-box-card').forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = ((e.clientX - rect.left) / rect.width) * 100;
-                const y = ((e.clientY - rect.top) / rect.height) * 100;
-                card.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(198,255,0,0.05) 0%, rgba(255,255,255,0.01) 60%)`;
-            });
-            card.addEventListener('mouseleave', () => {
-                card.style.background = '';
-            });
-        });
-    </script>
+  </div>
+</section>
+</main>
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-content"><a class="brand" href="#top" aria-label="SQUAD MEDIA — الرئيسية" dir="ltr"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-name">SQUAD<small>MEDIA</small></span></a><p>فريقك التنفيذي لبناء نموك. استراتيجية واضحة، إبداع له تأثير، وتسويق يناسب طموحك.</p><div class="social-links"><a href="https://www.facebook.com/profile.php?id=61592583453139" target="_blank" rel="noopener noreferrer" aria-label="SQUAD MEDIA على فيسبوك"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a><a href="https://www.instagram.com/squad4media/" target="_blank" rel="noopener noreferrer" aria-label="SQUAD MEDIA على إنستجرام"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a><a href="https://wa.me/201042472017" target="_blank" rel="noopener noreferrer" aria-label="تواصل على واتساب"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a></div></div>
+    <div class="footer-wordmark" aria-hidden="true">SQUAD<span>↗</span>MEDIA</div>
+    <div class="footer-bottom"><span>جميع الحقوق محفوظة © 2026 لـ SQUAD MEDIA — إحدى شركات مجموعة SCOPE Growth Ecosystem.</span><a class="back-top" href="#top">إلى الأعلى ↑</a></div>
+  </div>
+</footer>
+<a href="https://wa.me/201042472017" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="تحدث معنا على واتساب"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a>
 </body>
 </html>
