@@ -104,15 +104,17 @@ pricingTabs.forEach(tab => {
 });
 activateTab(pricingTabs.find(tab => tab.classList.contains('active')) || pricingTabs[0]);
 
-// Monthly package fees are fixed; platform spend is added only to the total budget.
+// Commission applies to platform spend: 20% standalone, 10% with a monthly package.
 const calculator = document.getElementById('feeCalculator');
 const calculatorPlan = document.getElementById('calculatorPlan');
 const calculatorSpend = document.getElementById('calculatorSpend');
 const calculatorFee = document.getElementById('calculatorFee');
 const calculatorTotal = document.getElementById('calculatorTotal');
+const calculatorCommission = document.getElementById('calculatorCommission');
+const calculatorCommissionLabel = document.getElementById('calculatorCommissionLabel');
 const calculatorBreakdown = document.getElementById('calculatorBreakdown');
 const formatMoney = value => new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(value);
-const monthlyFees = { presence: 1500, growth: 3000, scale: 5000 };
+const monthlyFees = { standalone: 0, presence: 1500, growth: 3000, scale: 5000 };
 
 function showMoney(output, amount) {
   output.replaceChildren(document.createTextNode(formatMoney(amount) + ' '));
@@ -124,14 +126,25 @@ function showMoney(output, amount) {
 function updateFeeEstimate() {
   const spend = calculatorSpend.valueAsNumber;
   const fee = monthlyFees[calculatorPlan.value];
+  const rate = calculatorPlan.value === 'standalone' ? 0.2 : 0.1;
+  calculatorCommissionLabel.textContent = `عمولة إدارة الإعلان (${rate * 100}%)`;
   showMoney(calculatorFee, fee);
-  if (!Number.isFinite(spend) || spend < 0) {
+  // Calculate in piastres so displayed line items always add up to the total.
+  const spendCents = Math.round(spend * 100);
+  const commissionCents = Math.round(spendCents * rate);
+  const totalCents = fee * 100 + spendCents + commissionCents;
+  if (!Number.isFinite(spend) || spend < 0 || !calculatorSpend.validity.valid || !Number.isSafeInteger(totalCents)) {
+    calculatorCommission.textContent = '—';
     calculatorTotal.textContent = '—';
-    calculatorBreakdown.textContent = 'اكتب ميزانية إعلان صحيحة تساوي صفرًا أو أكثر.';
+    calculatorSpend.setAttribute('aria-invalid', 'true');
+    calculatorBreakdown.textContent = 'اكتب ميزانية إعلان صحيحة تساوي صفرًا أو أكثر، بحد أقصى منزلتين عشريتين.';
     return;
   }
-  showMoney(calculatorTotal, fee + spend);
-  calculatorBreakdown.textContent = `${formatMoney(fee)} ج.م أتعاب الباقة + ${formatMoney(spend)} ج.م ميزانية الإعلان المدفوعة للمنصة.`;
+  calculatorSpend.removeAttribute('aria-invalid');
+  showMoney(calculatorCommission, commissionCents / 100);
+  showMoney(calculatorTotal, totalCents / 100);
+  const packageLine = fee ? `${formatMoney(fee)} ج.م أتعاب الباقة + ` : 'بدون اشتراك في باقة: ';
+  calculatorBreakdown.textContent = `${packageLine}${formatMoney(commissionCents / 100)} ج.م عمولة الإدارة (${rate * 100}%) + ${formatMoney(spendCents / 100)} ج.م ميزانية الإعلان المدفوعة للمنصة.`;
 }
 calculator.addEventListener('submit', event => { event.preventDefault(); updateFeeEstimate(); });
 calculator.addEventListener('input', updateFeeEstimate);
@@ -211,6 +224,7 @@ leadForm.addEventListener('submit', event => {
     `👤 *الاسم:* ${document.getElementById('leadName').value.trim()}`,
     `🏢 *البراند / النشاط:* ${document.getElementById('leadBrand').value.trim()}`,
     `📦 *الخدمة المطلوبة:* ${leadService.selectedOptions[0].textContent.trim()}`,
+    ...(monthlyFees[leadService.value] ? ['🏷️ *سعر الباقة:* بعد الخصم ولفترة محدودة.', '📊 *عمولة إدارة الإعلان:* 10% من ميزانية الإعلان، تُضاف لسعر الباقة.'] : leadService.value === 'meta-management' ? ['📊 *عمولة إدارة الإعلان:* 20% من ميزانية الإعلان بدون باقة.'] : []),
     `🌐 *رابط المتجر / الصفحة:* ${document.getElementById('leadLink').value.trim() || 'غير محدد'}`,
     `🎯 *نوع النشاط:* ${type.selectedOptions[0].textContent.trim()}`,
     ...(leadBudgetGroup.hidden ? [] : [`💰 *إنفاق الإعلان للمنصات (منفصل عن أتعاب الخدمة):* ${budget.selectedOptions[0].textContent.trim()}`]),

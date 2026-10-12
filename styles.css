@@ -124,6 +124,9 @@ section[id] { scroll-margin-top: 20px; }
 .pricing-header { text-align: center; }
 .pricing-header .eyebrow { justify-content: center; }
 .pricing-header .section-subtitle { margin-inline: auto; }
+.pricing-promotion { display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; margin: -12px auto 24px; color: var(--primary); font-size: 14px; text-align: center; }
+.price-offer-note { margin: -18px 0 10px; color: var(--primary); font-size: 12px; font-weight: 700; }
+.price-commission-note { margin-bottom: 22px; color: #deded8; font-size: 12px; }
 .pricing-nav { display: flex; justify-content: center; gap: 7px; width: fit-content; max-width: 100%; margin: 32px auto 45px; padding: 6px; border: 1px solid var(--border); background: #171717; border-radius: 10px; }
 .pricing-tab-btn { background: transparent; border: 0; border-radius: 6px; min-height: 46px; padding: 10px 26px; font-size: 13px; font-weight: 700; color: var(--text-muted); }
 .pricing-tab-btn:hover { color: white; }
@@ -521,7 +524,7 @@ select.form-control { padding-inline-end: 24px; }
 .calculator-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; min-width: 0; }
 .calculator-result { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr auto; align-items: center; border-top: 1px solid #464b39; padding-top: 15px; gap: 8px 14px; }
 .calculator-result > span { font-size: 12px; }
-.calculator-result output { font: 700 36px/1.4 var(--font-title); color: var(--primary); }
+.calculator-result output { min-width: 0; overflow-wrap: anywhere; font: 700 36px/1.4 var(--font-title); color: var(--primary); }
 .calculator-result output small { font: 400 12px var(--font-main); }
 .calculator-result p { grid-column: 1 / -1; font-size: 11px; color: #c4c4b8; }
 .calculator-note { grid-column: 1 / -1; font-size: 10px; }
