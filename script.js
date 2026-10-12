@@ -104,43 +104,34 @@ pricingTabs.forEach(tab => {
 });
 activateTab(pricingTabs.find(tab => tab.classList.contains('active')) || pricingTabs[0]);
 
-// Calculate the adopted fees only; ad spend is always paid separately.
+// Monthly package fees are fixed; platform spend is added only to the total budget.
 const calculator = document.getElementById('feeCalculator');
 const calculatorPlan = document.getElementById('calculatorPlan');
 const calculatorSpend = document.getElementById('calculatorSpend');
 const calculatorFee = document.getElementById('calculatorFee');
+const calculatorTotal = document.getElementById('calculatorTotal');
 const calculatorBreakdown = document.getElementById('calculatorBreakdown');
 const formatMoney = value => new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(value);
-const monthlyFees = {
-  growth: { base: 8500, cap: 20000 },
-  scale: { base: 13500, cap: 40000 }
-};
+const monthlyFees = { presence: 1500, growth: 3000, scale: 5000 };
+
+function showMoney(output, amount) {
+  output.replaceChildren(document.createTextNode(formatMoney(amount) + ' '));
+  const unit = document.createElement('small');
+  unit.textContent = 'ج.م';
+  output.append(unit);
+}
 
 function updateFeeEstimate() {
   const spend = calculatorSpend.valueAsNumber;
-  calculatorFee.replaceChildren();
+  const fee = monthlyFees[calculatorPlan.value];
+  showMoney(calculatorFee, fee);
   if (!Number.isFinite(spend) || spend < 0) {
-    calculatorFee.textContent = '—';
-    calculatorBreakdown.textContent = 'اكتب إنفاقًا صحيحًا يساوي صفرًا أو أكثر.';
+    calculatorTotal.textContent = '—';
+    calculatorBreakdown.textContent = 'اكتب ميزانية إعلان صحيحة تساوي صفرًا أو أكثر.';
     return;
   }
-  if (spend > 100000) {
-    calculatorFee.textContent = 'عرض مخصص';
-    calculatorBreakdown.textContent = 'إنفاق أعلى من 100,000 ج.م يحتاج دراسة وعرضًا مخصصًا.';
-    return;
-  }
-  const plan = monthlyFees[calculatorPlan.value];
-  const excess = plan ? Math.max(0, spend - plan.cap) * .1 : 0;
-  const fee = plan ? plan.base + excess : Math.max(3000, spend * .15);
-  calculatorFee.append(document.createTextNode(formatMoney(fee) + ' '));
-  const unit = document.createElement('small');
-  unit.textContent = 'ج.م';
-  calculatorFee.append(unit);
-  calculatorBreakdown.textContent = plan
-    ? excess > 0
-      ? `${formatMoney(plan.base)} ج.م أساس الباقة + ${formatMoney(excess)} ج.م (10% من الإنفاق الزائد فقط).`
-      : `تشمل إدارة الإنفاق حتى ${formatMoney(plan.cap)} ج.م ضمن أتعاب الباقة.`
-    : 'الأعلى بين 3,000 ج.م و15% من الإنفاق؛ باستخدام المحتوى الجاهز لديك.';
+  showMoney(calculatorTotal, fee + spend);
+  calculatorBreakdown.textContent = `${formatMoney(fee)} ج.م أتعاب الباقة + ${formatMoney(spend)} ج.م ميزانية الإعلان المدفوعة للمنصة.`;
 }
 calculator.addEventListener('submit', event => { event.preventDefault(); updateFeeEstimate(); });
 calculator.addEventListener('input', updateFeeEstimate);
@@ -171,6 +162,17 @@ questions.forEach(question => question.addEventListener('toggle', () => {
 // Form data stays in the browser until the visitor chooses to send in WhatsApp.
 const leadForm = document.getElementById('leadForm');
 const leadService = document.getElementById('leadService');
+const leadBudget = document.getElementById('leadBudget');
+const leadBudgetGroup = document.getElementById('leadBudgetGroup');
+const adBudgetServices = new Set(['consultation', 'meta-management', 'presence', 'growth', 'scale', 'partnership']);
+function updateServiceFields() {
+  const needsAdBudget = adBudgetServices.has(leadService.value);
+  leadBudgetGroup.hidden = !needsAdBudget;
+  leadBudget.required = needsAdBudget;
+  leadBudget.disabled = !needsAdBudget;
+}
+leadService.addEventListener('change', updateServiceFields);
+updateServiceFields();
 const formStatus = document.getElementById('formStatus');
 const whatsappFallback = document.getElementById('whatsappFallback');
 leadForm.addEventListener('input', () => {
@@ -186,6 +188,7 @@ leadForm.querySelectorAll('input[required]').forEach(input => {
 document.querySelectorAll('[data-offer]').forEach(link => {
   link.addEventListener('click', () => {
     leadService.value = link.dataset.offer;
+    updateServiceFields();
     leadService.dispatchEvent(new Event('input', { bubbles: true }));
   });
 });
@@ -210,7 +213,7 @@ leadForm.addEventListener('submit', event => {
     `📦 *الخدمة المطلوبة:* ${leadService.selectedOptions[0].textContent.trim()}`,
     `🌐 *رابط المتجر / الصفحة:* ${document.getElementById('leadLink').value.trim() || 'غير محدد'}`,
     `🎯 *نوع النشاط:* ${type.selectedOptions[0].textContent.trim()}`,
-    `💰 *إنفاق الإعلان للمنصات (منفصل عن أتعاب الخدمة):* ${budget.selectedOptions[0].textContent.trim()}`,
+    ...(leadBudgetGroup.hidden ? [] : [`💰 *إنفاق الإعلان للمنصات (منفصل عن أتعاب الخدمة):* ${budget.selectedOptions[0].textContent.trim()}`]),
     '',
     'أنتظر تواصلكم لمناقشة خطة النمو 📈'
   ].join('\n');
@@ -241,5 +244,5 @@ if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-mot
       observer.unobserve(entry.target);
     });
   }, { threshold: .12 });
-  document.querySelectorAll('.service-card, .team-image, .testimonial-card').forEach(item => observer.observe(item));
+  document.querySelectorAll('.solution-card, .team-image, .testimonial-card').forEach(item => observer.observe(item));
 }
